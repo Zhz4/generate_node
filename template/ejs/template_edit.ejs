@@ -3,7 +3,15 @@
     <n-form ref="formRef" class="dialog_form" :label-width="110" :model="form" :rules="rules" label-placement="left" label-align="left">
     <%_ edit_form_item_list.forEach(function(item){ _%>
       <n-form-item label="<%= item.label %>">
-        <n-input v-model:value="searchParams.<%= item.value %>" type="text" clearable/>
+        <%_ if (item.type === 'select') { _%>
+        <n-select 
+          v-model:value="searchParams.user" 
+          :options="<%- jsonToJsFormat(item.options) %>"
+          clearable
+        />
+        <%_ } else { _%>
+        <n-input v-model:value="searchParams.<%= item.key %>" type="text" clearable/>
+        <%_ } _%>
       </n-form-item>
     <%_ }) _%>
     </n-form>

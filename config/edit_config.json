@@ -1,33 +1,42 @@
 {
   "_comment": "这里是编辑的配置文件",
-  "edit_form_item_list": [
-    {
+  "edit_form_item_list": [{
       "label": "部门",
-      "value": "deptName"
+      "key": "deptName"
     },
     {
       "label": "入职日期",
-      "value": "entryDate"
+      "key": "entryDate"
     },
     {
       "label": "工号",
-      "value": "jobNum"
+      "key": "jobNum"
     },
     {
       "label": "最近续签状态",
-      "value": "latestContractStatus"
+      "key": "latestContractStatus",
+      "type": "select",
+      "options": [{
+          "label": "续签",
+          "value": "1"
+        },
+        {
+          "label": "不续签",
+          "value": "0"
+        }
+      ]
     },
     {
       "label": "姓名",
-      "value": "name"
+      "key": "name"
     },
     {
       "label": "职位",
-      "value": "positionName"
+      "key": "positionName"
     },
     {
       "label": "备注",
-      "value": "remark"
+      "key": "remark"
     }
   ]
 }
