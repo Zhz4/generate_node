@@ -55,8 +55,8 @@
 2. 模版中的变量从何而来？
    - 模版中对应的变量名其实就是 `/config/xxx.json `配置文件中的各个key
 3. 关联模版以及对应的配置文件还有输出文件
-   - 在`/core/modules/xxx.js`中可以用于关联模版以及配置文件，有时候多个模版之间可能会用到同样的config文件，因此在configList中可以关联多个模版，实际上templates 中以及configList 中是相互关联的，templates中的所有模版都可以使用configList中的变量。因此，在配置configList文件中的key不能重复。`templates` 中的`outpushName`用于配置输出路径
-4. 注册执行任务，在`config/task：writeCoreModules`中可以用于配置需要执行的任务。其任务名对应 `/core/modules/xxx.js` 中的name 
+   - 在`/relations/modules/xxx.js`中可以用于关联模版以及配置文件，有时候多个模版之间可能会用到同样的config文件，因此在configList中可以关联多个模版，实际上templates 中以及configList 中是相互关联的，templates中的所有模版都可以使用configList中的变量。因此，在配置configList文件中的key不能重复。`templates` 中的`outpushName`用于配置输出路径
+4. 注册执行任务，在`config/task：writeCoreModules`中可以用于配置需要执行的任务。其任务名对应 `/relations/modules/xxx.js` 中的name 
 
 ## 对比原来python版本中的更新点
 1. 生成的代码是完全已经格式化好的，也就是说可以完全按照模版中的格式来进行生成

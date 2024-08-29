@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "node ./test.js",
-    "start":"node ./main.js"
+    "start": "node ./main.js"
   },
   "author": "",
   "license": "ISC",

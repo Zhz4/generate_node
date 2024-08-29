@@ -1,7 +1,6 @@
 {
   "_comment": "这个配置文件包含用户相关的标签和工具按钮",
-  "main_form_item_list": [
-    {
+  "main_form_item_list": [{
       "label": "工号",
       "key": "jobNum"
     },
@@ -23,15 +22,24 @@
     },
     {
       "label": "是否在职",
-      "key": "user"
+      "key": "user",
+      "type": "select",
+      "options": [{
+          "label": "在职",
+          "value": "1"
+        },
+        {
+          "label": "离职",
+          "value": "0"
+        }
+      ]
     },
     {
       "label": "最近合同状态",
       "key": "latestContractStatus"
     }
   ],
-  "tool_button_list": [
-    {
+  "tool_button_list": [{
       "button_name": "导入数据",
       "handler": "handleInput",
       "icon_component": "ArrowDownCircleOutline"
@@ -52,8 +60,7 @@
       "icon_component": "ArrowDownCircleOutline"
     }
   ],
-  "table_list": [
-    {
+  "table_list": [{
       "label": "工号",
       "key": "jobNum"
     },
@@ -83,8 +90,7 @@
     }
   ],
   "apiFileName": "dealWithContract",
-  "apiList": [
-    {
+  "apiList": [{
       "_comment": "查询接口",
       "remark": "列表",
       "command": "select",

@@ -9,9 +9,17 @@
       <n-form ref="formRef" inline :label-width="100" :model="searchParams" label-placement="left">
       <%_ main_form_item_list.forEach(function(item){ _%>
         <n-form-item label="<%= item.label %>">
+          <%_ if (item.type === 'select') { _%>
+          <n-select 
+            v-model:value="searchParams.user" 
+            :options="<%- jsonToJsFormat(item.options) %>"
+            clearable
+          />
+          <%_ } else { _%>
           <n-input v-model:value="searchParams.<%= item.key %>" type="text" clearable/>
+          <%_ } _%>
         </n-form-item>
-        <%_ }) _%>
+      <%_ }) _%>
         <n-form-item>
           <n-button type="primary" :loading="loading" @click="handleSearch">
             <template #icon>
@@ -83,7 +91,6 @@ const minXScroll = computed(() => {
   );
   return colsWidth;
 });
-
 /**
   * 选中行
   */

@@ -2,6 +2,7 @@ import ejs from "ejs";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { jsonToJsFormat } from "../common/optionFormat.js";
 
 // 获取当前文件的目录
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +28,7 @@ export default function renderTemplate(templateName, data) {
     const template = fs.readFileSync(templatePath, "utf8");
 
     // 渲染模板
-    const renderedHtml = ejs.render(template, data);
+    const renderedHtml = ejs.render(template, { ...data, jsonToJsFormat });
 
     return renderedHtml;
   } catch (err) {
