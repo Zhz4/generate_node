@@ -36,7 +36,9 @@
   "apiList": [] // 这里的是api配置
 }
 ```
-执行命令 `pnpm run start`
+执行命令：  
+ `pnpm install`   
+ `pnpm run start`  
 包含 `index.vue`和`tableConfig.jsx`,`api`,`EditModel`文件，只需要将该文件复制粘贴到后台项目中便可以执行
 注意：代码是没有进行格式化的（但任然不影响阅读），因此需要在vscode中格式化一下代码（最好！）
 
