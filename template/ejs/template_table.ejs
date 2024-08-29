@@ -1,10 +1,8 @@
 export const createColumns = ({ handleDelete, handleEdit }) => {
   return [
     { type: "selection", width: 50 },
-    <% table_list.forEach(item=>{ %>
-    { title: "<%= item.label %>", key: "<%= item.key %>", width: 110 },
-    <% }) %>
-    {
+    <% table_list.forEach(item=>{ %>{ title: "<%= item.label %>", key: "<%= item.key %>", width: 110 },
+    <% }) %>{
       title: "操作",
       key: "",
       fixed: "right",
