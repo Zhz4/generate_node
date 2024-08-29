@@ -1,0 +1,33 @@
+export const createColumns = ({ handleDelete, handleEdit }) => {
+  return [
+    { type: "selection", width: 50 },
+    <% table_list.forEach(item=>{ %>
+    { title: "<%= item.label %>", key: "<%= item.key %>", width: 110 },
+    <% }) %>
+    {
+      title: "操作",
+      key: "",
+      fixed: "right",
+      width: 170,
+      render(row) {
+        return (
+          <div className="table_btn_wrap">
+            <NButton text type="primary" onClick={() => handleEdit(row)}>
+              编辑
+            </NButton>
+            <n-popconfirm onPositiveClick={() => handleDelete(row)}>
+              {{
+                trigger: () => (
+                  <NButton text type="error">
+                    删除
+                  </NButton>
+                ),
+                default: () => "是否确认删除数据",
+              }}
+            </n-popconfirm>
+          </div>
+        );
+      },
+    },
+  ];
+};

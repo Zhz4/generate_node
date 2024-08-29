@@ -1,0 +1,104 @@
+{
+  "_comment": "这个配置文件包含用户相关的标签和工具按钮",
+  "main_form_item_list": [
+    {
+      "label": "工号",
+      "key": "jobNum"
+    },
+    {
+      "label": "姓名",
+      "key": "name"
+    },
+    {
+      "label": "部门",
+      "key": "deptName"
+    },
+    {
+      "label": "职位",
+      "key": "positionName"
+    },
+    {
+      "label": "入职时间",
+      "key": "entryDate"
+    },
+    {
+      "label": "是否在职",
+      "key": "user"
+    },
+    {
+      "label": "最近合同状态",
+      "key": "latestContractStatus"
+    }
+  ],
+  "tool_button_list": [
+    {
+      "button_name": "导入数据",
+      "handler": "handleInput",
+      "icon_component": "ArrowDownCircleOutline"
+    },
+    {
+      "button_name": "导出数据",
+      "handler": "handleExport",
+      "icon_component": "ArrowDownCircleOutline"
+    },
+    {
+      "button_name": "批量删除",
+      "handler": "handleBatchDelete",
+      "icon_component": "ArrowDownCircleOutline"
+    },
+    {
+      "button_name": "批量修改",
+      "handler": "handleBatchEdit",
+      "icon_component": "ArrowDownCircleOutline"
+    }
+  ],
+  "table_list": [
+    {
+      "label": "工号",
+      "key": "jobNum"
+    },
+    {
+      "label": "姓名",
+      "key": "name"
+    },
+    {
+      "label": "部门",
+      "key": "deptName"
+    },
+    {
+      "label": "职位",
+      "key": "positionName"
+    },
+    {
+      "label": "入职日期",
+      "key": "entryDate"
+    },
+    {
+      "label": "最近续签状态",
+      "key": "latestContractStatus"
+    },
+    {
+      "label": "劳动合同期限详情",
+      "key": "details"
+    }
+  ],
+  "apiFileName": "dealWithContract",
+  "apiList": [
+    {
+      "_comment": "查询接口",
+      "remark": "列表",
+      "command": "select",
+      "url": "/contractManagementRecord/list",
+      "method": "get",
+      "handlerName": "list"
+    },
+    {
+      "_comment": "删除接口",
+      "remark": "删除",
+      "command": "delete",
+      "url": "/contractManagementRecord/deleteContractRecord",
+      "method": "post",
+      "handlerName": "deleteContractRecord"
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+<template>
+  <div class="page_container">
+    <div class="filter_wrap">
+      <n-form
+        ref="formRef"
+        inline
+        :label-width="100"
+        :model="searchParams"
+        label-placement="left"
+      ><% main_form_item_list.forEach(function(item){ %>
+        <n-form-item label="<%= item.label %>">
+          <n-input
+            v-model:value="searchParams.<%= item.key %>"
+            type="text"
+            clearable
+          />
+        </n-form-item><% }) %>
+        <n-form-item>
+          <n-button type="primary" :loading="loading" @click="handleSearch">
+            <template #icon>
+              <n-icon :component="Search" />
+            </template>
+            搜索
+          </n-button>
+          <n-button style="margin-left: 10px" @click="resetForm">重置</n-button>
+        </n-form-item>
+      </n-form>
+      <div class="tool_wrap">
+        <div class="btn_wrap"><% tool_button_list.forEach(function(item){ %>
+          <n-button type="primary" @click="<%= item.handler %>">
+            <template #icon>
+              <n-icon :component="<%= item.icon_component %>" />
+            </template>
+            <%= item.button_name %>
+          </n-button><% }) %>
+        </div>
+      </div>
+    </div>
+    <div class="table_wrap">
+      <n-data-table
+        v-model:checked-row-keys="selectIds"
+        class="page_table"
+        :columns="columns"
+        :single-line="false"
+        :data="tableData"
+        :row-key="(row) => row.id"
+        :scroll-x="minXScroll"
+        flex-height
+      ></n-data-table>
+    </div>
+    <div class="page_wrap">
+      <n-pagination
+        v-model:page="searchParams.page"
+        v-model:page-size="searchParams.size"
+        :item-count="total"
+        show-size-picker
+        :page-sizes="[20, 50, 100]"
+        @update:page="queryData()"
+        @update:page-size="queryData()"
+      >
+        <template #prefix="{ itemCount }">共 {{ itemCount }} 条</template>
+      </n-pagination>
+    </div>
+
+    <!-- 编辑 -->
+    <EditModal ref="editRef" @success="queryData"></EditModal>
+  </div>
+</template>
+<script setup>
+import { Search, Add } from "@vicons/ionicons5";
+import { createColumns } from "./tableConfig.jsx";
+import { usePageSearch } from "@/hooks/pageSearch";
+import EditModal from "./components/EditModal.vue";
+<% if(apiFileName && apiFileName !== ''){%>import <%= apiFileName %> from "@/api/<%= apiFileName %>.js ";
+<%}%>
+const columns = ref(createColumns({ handleDelete, handleEdit }));
+const minXScroll = computed(() => {
+  const cols = columns.value || [];
+  const colsWidth = cols.reduce(
+    (pre, cur) => pre + (cur.width || cur.minWidth || 100),
+    0
+  );
+  return colsWidth;
+});
+
+/**
+  * 选中行
+  */
+const selectIds = ref([]);
+
+/**
+  * 删除
+  */
+function handleDelete(row) {
+  console.log("删除");
+  console.log(row);
+}
+
+/**
+  * 编辑
+  */
+const editRef = ref()
+function handleEdit(row) {
+  console.log("编辑");
+  console.log(row);
+  editRef.value.open(row)
+}
+
+/**
+  * 搜索相关
+  */
+const {loading,tableData,total,searchParams,handleSearch,queryData,resetForm} = usePageSearch(<%= apiFileName %>, {
+  page: 1,
+  size: 20,
+});
+handleSearch()
+
+<% tool_button_list.forEach(function(item){ %>
+/**
+  * <%=item.button_name %>
+  */
+function <%= item.handler%>(row){
+  console.log(<%=item.button_name %>)
+  console.log(row)
+}
+<% }) %>
+</script>
+<style lang="scss" scoped>
+@import '@/style/tablePage.scss';
+</style>

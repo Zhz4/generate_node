@@ -1,0 +1,65 @@
+<template>
+  <n-modal
+    v-model:show="show"
+    class="edit_model"
+    preset="dialog"
+    title="编辑"
+    :show-icon="false"
+    @after-leave="close"
+  >
+    <n-form
+      ref="formRef"
+      class="dialog_form"
+      :label-width="110"
+      :model="form"
+      :rules="rules"
+      label-placement="left"
+      label-align="left"
+    ><% edit_form_item_list.forEach(function(item){ %>
+        <n-form-item label="<%= item.label %>">
+          <n-input
+            v-model:value="searchParams.<%= item.value %>"
+            type="text"
+            clearable
+          />
+        </n-form-item><% }) %>
+    </n-form>
+    <template #action>
+      <n-button :loading="loading" @click="close">取消</n-button>
+      <n-button type="primary" :loading="loading" @click="handleSubmit">
+        <template #icon>
+          <n-icon :component="ArrowUpOutline" />
+        </template>
+        保存
+      </n-button>
+    </template>
+  </n-modal>
+</template>
+
+<script setup>
+import { ArrowUpOutline } from "@vicons/ionicons5";
+
+const show = ref(false);
+const form = ref({});
+
+const emit = defineEmits(["success"]);
+
+/**
+ * 提交
+ */
+function handleSubmit() {
+  console.log("提交");
+  emit("success");
+}
+
+defineExpose({
+  open,
+});
+function open(row = {}) {
+  show.value = true;
+  form.value = { ...row };
+}
+function close() {
+  show.value = false;
+}
+</script>

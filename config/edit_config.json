@@ -1,0 +1,33 @@
+{
+  "_comment": "这里是编辑的配置文件",
+  "edit_form_item_list": [
+    {
+      "label": "部门",
+      "value": "deptName"
+    },
+    {
+      "label": "入职日期",
+      "value": "entryDate"
+    },
+    {
+      "label": "工号",
+      "value": "jobNum"
+    },
+    {
+      "label": "最近续签状态",
+      "value": "latestContractStatus"
+    },
+    {
+      "label": "姓名",
+      "value": "name"
+    },
+    {
+      "label": "职位",
+      "value": "positionName"
+    },
+    {
+      "label": "备注",
+      "value": "remark"
+    }
+  ]
+}
