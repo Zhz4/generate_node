@@ -1,20 +1,17 @@
+<%_ let iconList = []; _%>
+<%_ tool_button_list.forEach(function(item) { _%>
+  <%_ iconList.push(item.icon_component); _%>
+<%_ }); _%>
+<%_ iconList = [...new Set(iconList)]; _%>
 <template>
   <div class="page_container">
     <div class="filter_wrap">
-      <n-form
-        ref="formRef"
-        inline
-        :label-width="100"
-        :model="searchParams"
-        label-placement="left"
-      ><% main_form_item_list.forEach(function(item){ %>
+      <n-form ref="formRef" inline :label-width="100" :model="searchParams" label-placement="left">
+      <%_ main_form_item_list.forEach(function(item){ _%>
         <n-form-item label="<%= item.label %>">
-          <n-input
-            v-model:value="searchParams.<%= item.key %>"
-            type="text"
-            clearable
-          />
-        </n-form-item><% }) %>
+          <n-input v-model:value="searchParams.<%= item.key %>" type="text" clearable/>
+        </n-form-item>
+        <%_ }) _%>
         <n-form-item>
           <n-button type="primary" :loading="loading" @click="handleSearch">
             <template #icon>
@@ -26,13 +23,15 @@
         </n-form-item>
       </n-form>
       <div class="tool_wrap">
-        <div class="btn_wrap"><% tool_button_list.forEach(function(item){ %>
+        <div class="btn_wrap">
+        <%_ tool_button_list.forEach(function(item){ _%>
           <n-button type="primary" @click="<%= item.handler %>">
             <template #icon>
               <n-icon :component="<%= item.icon_component %>" />
             </template>
             <%= item.button_name %>
-          </n-button><% }) %>
+          </n-button>
+          <%_ }) _%>
         </div>
       </div>
     </div>
@@ -67,12 +66,14 @@
   </div>
 </template>
 <script setup>
-import { Search, Add } from "@vicons/ionicons5";
+import { Search,<%- iconList.join(', ') %> } from "@vicons/ionicons5";
 import { createColumns } from "./tableConfig.jsx";
 import { usePageSearch } from "@/hooks/pageSearch";
 import EditModal from "./components/EditModal.vue";
-<% if(apiFileName && apiFileName !== ''){%>import <%= apiFileName %> from "@/api/<%= apiFileName %>.js ";
-<%}%>
+<%_ if(apiFileName && apiFileName !== ''){_%>
+import <%= apiFileName %> from "@/api/<%= apiFileName %>.js ";
+<%_}_%>
+
 const columns = ref(createColumns({ handleDelete, handleEdit }));
 const minXScroll = computed(() => {
   const cols = columns.value || [];

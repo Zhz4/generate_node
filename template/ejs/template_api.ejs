@@ -1,14 +1,15 @@
 import service from '@/utils/request/index'
-<% apiList.forEach(item => { 
+
+<%_ apiList.forEach(item => { 
   // 定义变量
   const data = item.method === 'get' ? 'params' : 'data';
-%>
+_%>
 // 列表
 export const <%= item.handlerName %> = (<%= data %>) => {
-    return service.request({
-        url: '<%= item.url %>',
-        method: '<%= item.method %>',
-        <%= data %>
-    })
+  return service.request({
+    url: '<%= item.url %>',
+    method: '<%= item.method %>',
+    <%= data %>
+  })
 }
 <% }) %>
