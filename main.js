@@ -1,2 +1,2 @@
-import main from './core/main.js';
+import main from './relations/main.js';
 main()
