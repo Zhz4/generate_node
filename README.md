@@ -57,5 +57,14 @@
 3. 关联模版以及对应的配置文件还有输出文件
    - 在`/core/modules/xxx.js`中可以用于关联模版以及配置文件，有时候多个模版之间可能会用到同样的config文件，因此在configList中可以关联多个模版，实际上templates 中以及configList 中是相互关联的，templates中的所有模版都可以使用configList中的变量。因此，在配置configList文件中的key不能重复。`templates` 中的`outpushName`用于配置输出路径
 4. 注册执行任务，在`config/task：writeCoreModules`中可以用于配置需要执行的任务。其任务名对应 `/core/modules/xxx.js` 中的name 
+
+## 对比原来python版本中的更新点
+1. 生成的代码是完全已经格式化好的，也就是说可以完全按照模版中的格式来进行生成
+2. 代码逻辑可以写在ejs模版中，开发起来更加顺手和简洁
+3. 新增了任务配置项，可以选择指定多种模版生成
+4. 模版以及配置项之间关系更加清晰
+
+最重要的是新增以及修改模版更加方便了！！
+
 ## 根据配置文件生成的代码展示
 [查看代码](./doc/demoCode.md)
