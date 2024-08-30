@@ -74,13 +74,27 @@
   </div>
 </template>
 <script setup>
+<%_ let inputApiList = []; _%>
+<%_ let searchApi = ""; _%>
+<%_ let deleteApi = ""; _%>
+<%_ apiList.forEach(v => { _%>
+  <%_ if (v.command === 'select') { _%>
+    <%_ searchApi = v.handlerName; _%>
+  <%_ } else if (v.command === 'delete') { _%>
+    <%_ deleteApi = v.handlerName; _%>
+  <%_ } _%>
+  <%_ inputApiList.push(v.handlerName); _%>
+<%_ }) _%>
 import { Search,<%- iconList.join(', ') %> } from "@vicons/ionicons5";
 import { createColumns } from "./tableConfig.jsx";
 import { usePageSearch } from "@/hooks/pageSearch";
 import EditModal from "./components/EditModal.vue";
+import { useMessage } from "naive-ui"
 <%_ if(apiFileName && apiFileName !== ''){_%>
-import <%= apiFileName %> from "@/api/<%= apiFileName %>.js ";
+import { <%= inputApiList.join(", ") %> } from "@/api/<%= apiFileName %>.js ";
 <%_}_%>
+
+const message = useMessage()
 
 const columns = ref(createColumns({ handleDelete, handleEdit }));
 const minXScroll = computed(() => {
@@ -99,7 +113,11 @@ const selectIds = ref([]);
 /**
   * 删除
   */
-function handleDelete(row) {
+async function handleDelete(row) {
+<%_ if(deleteApi !== ''){ _%>
+  await <%= deleteApi %>(row.id)
+  message.success("删除成功")
+<%_ } _%>
   console.log("删除");
   console.log(row);
 }
@@ -117,17 +135,20 @@ function handleEdit(row) {
 /**
   * 搜索相关
   */
-const {loading,tableData,total,searchParams,handleSearch,queryData,resetForm} = usePageSearch(<%= apiFileName %>, {
+<%_ if(searchApi !== ""){ _%>
+const {loading,tableData,total,searchParams,handleSearch,queryData,resetForm} = usePageSearch(<%= searchApi %>, {
   page: 1,
   size: 20,
 });
 handleSearch()
+<%_ } _%>
+
 
 <% tool_button_list.forEach(function(item){ %>
 /**
   * <%=item.button_name %>
   */
-function <%= item.handler%>(row){
+function <%= item.handler%>(){
   console.log("<%=item.button_name %>")
   console.log(row)
 }

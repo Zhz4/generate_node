@@ -15,7 +15,7 @@ export default {
     },
     {
         name: "template_edit",
-        outpushName: '/component/EditModal.vue',
+        outpushName: '/components/EditModal.vue',
     }
     ],
 }

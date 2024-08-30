@@ -5,12 +5,12 @@
       <n-form-item label="<%= item.label %>">
         <%_ if (item.type === 'select') { _%>
         <n-select 
-          v-model:value="searchParams.user" 
+          v-model:value="form.user" 
           :options="<%- jsonToJsFormat(item.options) %>"
           clearable
         />
         <%_ } else { _%>
-        <n-input v-model:value="searchParams.<%= item.key %>" type="text" clearable/>
+        <n-input v-model:value="form.<%= item.key %>" type="text" clearable/>
         <%_ } _%>
       </n-form-item>
     <%_ }) _%>
