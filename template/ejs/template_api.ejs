@@ -4,7 +4,7 @@ import service from '@/utils/request/index'
   // 定义变量
   const data = item.method === 'get' ? 'params' : 'data';
 _%>
-// 列表
+// <%= item.remark %>
 export const <%= item.handlerName %> = (<%= data %>) => {
   return service.request({
     url: '<%= item.url %>',

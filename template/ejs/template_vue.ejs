@@ -11,7 +11,7 @@
         <n-form-item label="<%= item.label %>">
           <%_ if (item.type === 'select') { _%>
           <n-select 
-            v-model:value="searchParams.user" 
+            v-model:value="searchParams.<%= item.key %>" 
             :options="<%- jsonToJsFormat(item.options) %>"
             clearable
           />

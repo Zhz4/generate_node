@@ -5,7 +5,7 @@
       <n-form-item label="<%= item.label %>">
         <%_ if (item.type === 'select') { _%>
         <n-select 
-          v-model:value="form.user" 
+          v-model:value="form.<%= item.key %>" 
           :options="<%- jsonToJsFormat(item.options) %>"
           clearable
         />
@@ -41,6 +41,7 @@ const emit = defineEmits(["success"]);
 function handleSubmit() {
   console.log("提交");
   emit("success");
+  close()
 }
 
 defineExpose({
