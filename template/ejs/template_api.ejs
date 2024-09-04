@@ -5,7 +5,7 @@ import service from '@/utils/request/index'
   const data = item.method === 'get' ? 'params' : 'data';
 _%>
 // <%= item.remark %>
-export const <%= item.handlerName %> = (<%= data %>) => {
+export const <%= item.handlerName %> = <%= data %> => {
   return service.request({
     url: '<%= item.url %>',
     method: '<%= item.method %>',
