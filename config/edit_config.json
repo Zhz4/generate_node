@@ -6,7 +6,9 @@
     },
     {
       "label": "入职日期",
-      "key": "entryDate"
+      "key": "entryDate",
+      "type": "date",
+      "timeformat": "YYYY-MM-DD"
     },
     {
       "label": "工号",

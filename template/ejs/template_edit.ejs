@@ -9,6 +9,8 @@
           :options="<%- jsonToJsFormat(item.options) %>"
           clearable
         />
+        <%_ } else if (item.type === 'date') { _%>
+        <n-date-picker v-model:formatted-value="form.<%= item.key %>" value-format="<%= item.timeformat %>" type="date" clearable/>
         <%_ } else { _%>
         <n-input v-model:value="form.<%= item.key %>" type="text" clearable/>
         <%_ } _%>
