@@ -105,6 +105,10 @@ import { createColumns } from "./tableConfig.jsx";
 import { usePageSearch } from "@/hooks/pageSearch";
 import EditModal from "./components/EditModal.vue";
 import { useMessage } from "naive-ui"
+<%_ if(tool_button_list && tool_button_list.find(v=>v.type === 'export')){_%>
+import { findNodeByValid } from '@/utils/util-function/tree'
+import { exportExcel } from '@/utils/excel/index.js'
+<%_}_%>
 <%_ if(apiFileName && apiFileName !== ''){_%>
 import { <%= inputApiList.join(", ") %> } from "@/api/<%= apiFileName %>.js";
 <%_}_%>
@@ -120,6 +124,7 @@ const minXScroll = computed(() => {
   );
   return colsWidth;
 });
+
 /**
   * 选中行
   */
@@ -211,6 +216,36 @@ async function <%= item.handler %>() {
 }
 <%_ return } _%>
 
+<%_ if(item.type === 'export') {// 导出模板 _%>
+/**
+ * <%= item.button_name %>
+ */
+async function <%= item.handler %>() {
+  const colums = Array.from(columns.value)
+  const fields = findNodeByValid(colums, 'children', item => {
+    if (item.key && !['num', 'actions'].includes(item.key)) return true
+    return false
+  })
+  const header = fields.map(v => v.title)
+  const keys = fields.map(v => v.key)
+  const exportsearchParams = searchParams
+  let data = (await <%= apiList.find(v=>v.command === 'export').handlerName %>(exportsearchParams)).data
+  if (data.length === 0) {
+    message.warning('没有数据导出')
+    return
+  }
+  data = data.map(v => {
+    return keys.map(key => v[key])
+  })
+  exportExcel({
+    filename: '<%= item.exportFileName %>',
+    header,
+    data,
+    autoWidth: true,
+    bookType: 'xlsx'
+  })
+}
+<%_ return } _%>
 /**
   * <%=item.button_name %>
   */

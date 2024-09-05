@@ -58,6 +58,8 @@
     {
       "button_name": "导出数据",
       "handler": "handleExport",
+      "type":"export",
+      "exportFileName": "劳动合同续签",
       "icon_component": "ArrowDownCircleOutline"
     },
     {
@@ -124,6 +126,14 @@
       "url": "/ckEmployeeUtilityBills/importExcel",
       "method": "post",
       "handlerName": "importExcel"
+    },
+    {
+      "_comment": "导出接口",
+      "remark": "导出",
+      "command": "export",
+      "url": "/ckEmployeeUtilityBills/export",
+      "method": "post",
+      "handlerName": "exportData"
     }
   ]
 }
