@@ -68,3 +68,5 @@
 
 ## 根据配置文件生成的代码展示
 [查看代码](./doc/demoCode.md)
+[配置介绍](./doc/Instructions.md)
+
