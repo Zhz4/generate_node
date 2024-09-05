@@ -198,6 +198,19 @@ async function <%= item.handler %>(file) {
 }
 <%_ return } _%>
 
+<%_ if(item.type === 'importTemplate') {// 导入模板 _%>
+/**
+ * <%= item.button_name %>
+ */
+async function <%= item.handler %>() {
+  const link = document.createElement('a')
+  link.href = '<%= item.link %>'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+<%_ return } _%>
+
 /**
   * <%=item.button_name %>
   */
