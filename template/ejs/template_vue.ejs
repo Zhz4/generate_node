@@ -15,6 +15,8 @@
             :options="<%- jsonToJsFormat(item.options) %>"
             clearable
           />
+          <%_ } else if (item.type === 'daterange') { _%>
+          <n-date-picker v-model:formatted-value="<%= item.key %>" value-format="<%= item.timeformat %>" type="daterange" clearable />
           <%_ } else { _%>
           <n-input v-model:value="searchParams.<%= item.key %>" type="text" clearable/>
           <%_ } _%>
@@ -144,6 +146,32 @@ const {loading,tableData,total,searchParams,handleSearch,queryData,resetForm} = 
 handleSearch()
 <%_ } _%>
 
+
+<%_ main_form_item_list.forEach(function(item){ _%>
+<%_ if(item.type === 'daterange'){ _%>
+/**
+  * <%= item.label %>
+  */
+const <%= item.key %> = computed({
+  get() {
+    if (!searchParams.<%= item.startField %> || !searchParams.<%= item.endField %>) {
+      return null
+    }
+    return [searchParams.<%= item.startField %>, searchParams.<%= item.endField %>]
+  },
+  set(val) {
+    if (!val) {
+      val = []
+      searchParams.<%= item.startField %> = ''
+      searchParams.<%= item.endField %> = ''
+      return
+    }
+    searchParams.<%= item.startField %> = val[0]
+    searchParams.<%= item.endField %> = val[1]
+  }
+})
+<%_ } _%>
+<%_ }) _%>
 
 <% tool_button_list.forEach(function(item){ %>
 /**
