@@ -45,8 +45,8 @@
   ],
   "tool_button_list": [{
       "button_name": "导入数据",
-      "handler": "handleInput",
-      "icon_component": "ArrowDownCircleOutline"
+      "type": "import",
+      "handler": "handleInput"
     },
     {
       "button_name": "导出数据",
@@ -109,6 +109,14 @@
       "url": "/contractManagementRecord/deleteContractRecord",
       "method": "post",
       "handlerName": "deleteContractRecord"
+    },
+    {
+      "_comment": "导入接口",
+      "remark": "导入",
+      "command": "import",
+      "url": "/ckEmployeeUtilityBills/importExcel",
+      "method": "post",
+      "handlerName": "importExcel"
     }
   ]
 }

@@ -1,5 +1,8 @@
 <%_ let iconList = []; _%>
 <%_ tool_button_list.forEach(function(item) { _%>
+  <%_ if(item.type === 'import') { _%>
+    <%_ iconList.push('ArrowDownCircleOutline'); _%>
+    <%_ return } _%>
   <%_ iconList.push(item.icon_component); _%>
 <%_ }); _%>
 <%_ iconList = [...new Set(iconList)]; _%>
@@ -35,6 +38,16 @@
       <div class="tool_wrap">
         <div class="btn_wrap">
         <%_ tool_button_list.forEach(function(item){ _%>
+          <%_ if(item.type === 'import'){ // 导入 _%>
+          <upload-file :auto-upload="false" :limit="1" :file-type-arr="['xlsx', 'xls']" @success="<%= item.handler %>">
+            <n-button type="warning">
+              <template #icon>
+                <n-icon :component="ArrowDownCircleOutline" />
+              </template>
+              <%= item.button_name %>
+            </n-button>
+          </upload-file>
+          <%_ return } _%>
           <n-button type="primary" @click="<%= item.handler %>">
             <template #icon>
               <n-icon :component="<%= item.icon_component %>" />
@@ -173,7 +186,18 @@ const <%= item.key %> = computed({
 <%_ } _%>
 <%_ }) _%>
 
-<% tool_button_list.forEach(function(item){ %>
+<%_ tool_button_list.forEach(function(item){ _%>
+<%_ if(item.type === 'import') {// 导入 _%>
+/**
+ * <%= item.button_name %>
+ */
+async function <%= item.handler %>(file) {
+  await <%= apiList.find(v=>v.command === 'import').handlerName %>(file)
+  message.success('导入成功')
+  queryData()
+}
+<%_ return } _%>
+
 /**
   * <%=item.button_name %>
   */
@@ -181,7 +205,7 @@ function <%= item.handler%>(){
   console.log("<%=item.button_name %>")
   console.log(row)
 }
-<% }) %>
+<%_ }) _%>
 </script>
 <style lang="scss" scoped>
 @import '@/style/tablePage.scss';
