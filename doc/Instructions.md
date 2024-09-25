@@ -66,7 +66,7 @@
 ```json
 {
     "button_name": "下载导入模版",
-    "handler": "handleExport",
+    "handler": "handleDownloadTemplate",
     "type":"importTemplate",
     "link":"http://soundasia.oss-cn-shenzhen.aliyuncs.com/colleagueBar/xlsx/2023/12/26/1703554813483.xlsx",
     "icon_component": "ArrowDownCircleOutline"
