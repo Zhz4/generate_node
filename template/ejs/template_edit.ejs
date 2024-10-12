@@ -31,7 +31,9 @@
 
 <script setup>
 import { ArrowUpOutline } from "@vicons/ionicons5";
+import { useMessage } from 'naive-ui'
 
+const message = useMessage()
 const show = ref(false);
 const form = ref({});
 
@@ -40,7 +42,7 @@ const emit = defineEmits(["success"]);
 /**
  * 提交
  */
-function handleSubmit() {
+async function handleSubmit() {
   console.log("提交");
   emit("success");
   close()
@@ -55,5 +57,6 @@ function open(row = {}) {
 }
 function close() {
   show.value = false;
+  form.value = {}
 }
 </script>
