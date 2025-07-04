@@ -5,7 +5,7 @@
 ## 🏗️ 项目架构
 
 ```
-OA_generate_node/
+Generate_node/
 ├── packages/
 │   └── core/                 # 核心代码生成包
 │       ├── lib/              # 核心库代码
@@ -56,7 +56,7 @@ pnpm add @generate_node/core
 
 核心代码生成包，提供：
 
-- **OAGenerator**: 主要的代码生成器类
+- **Generator**: 主要的代码生成器类
 - **ConfigManager**: 配置管理器
 - **TemplateEngine**: 模版引擎
 - **FileUtils**: 文件工具类
@@ -92,9 +92,9 @@ pnpm add @generate_node/core
 ### 编程式使用
 
 ```javascript
-import { OAGenerator } from '@oa_generate_node/core';
+import { Generator } from '@generate_node/core';
 
-const generator = new OAGenerator({
+const generator = new Generator({
   configPath: './config',
   templatePath: './template',
   outputPath: './output'
@@ -107,13 +107,13 @@ await generator.generate();
 
 ```bash
 # 生成代码
-oa-generate generate -c ./config -t ./template -o ./output
+generate generate -c ./config -t ./template -o ./output
 
 # 指定模块
-oa-generate generate -m backend,frontend
+generate generate -m backend,frontend
 
 # 初始化项目
-oa-generate init
+generate init
 ```
 
 ## 📋 配置文件
@@ -145,10 +145,3 @@ oa-generate init
 2. 在 `packages/core/lib/index.js` 中导出新模块
 3. 在 `examples` 中添加使用示例
 4. 更新文档
-
-### 发布包
-
-```bash
-cd packages/core
-npm publish
-```
