@@ -1,4 +1,4 @@
-import { OAGenerator } from '@generate_node/core';
+import { Generate } from '@generate_node/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -11,7 +11,7 @@ async function main() {
 
   try {
     // 创建生成器实例
-    const generator = new OAGenerator({
+    const generator = new Generate({
       configPath: path.join(__dirname, './'),      // 配置文件路径
       templatePath: path.join(__dirname, './template'),  // 模版文件路径
       outputPath: path.join(__dirname, './output')       // 输出路径

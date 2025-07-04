@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import { OAGenerator } from './index.js';
+import { Generate } from './index.js';
 import { program } from 'commander';
 import path from 'path';
 
 program
-  .name('oa-generate')
-  .description('OA代码生成工具')
+  .name('generate')
+  .description('代码生成工具')
   .version('1.0.0');
 
 program
@@ -20,7 +20,7 @@ program
     try {
       console.log('🚀 开始生成代码...');
       
-      const generator = new OAGenerator({
+      const generator = new Generate({
         configPath: path.resolve(options.config),
         templatePath: path.resolve(options.template),
         outputPath: path.resolve(options.output)

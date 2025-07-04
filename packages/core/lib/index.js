@@ -6,7 +6,7 @@ import { FileUtils } from './utils/fileUtils.js';
 /**
  * 代码生成器主类
  */
-export class OAGenerator {
+export class Generate {
   constructor(options = {}) {
     this.configPath = options.configPath || process.cwd();
     this.templatePath = options.templatePath || process.cwd();
@@ -64,4 +64,4 @@ export class OAGenerator {
 export { ConfigManager, TemplateEngine, FileUtils };
 
 // 默认导出
-export default OAGenerator; 
+export default Generate; 
