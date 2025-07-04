@@ -4,6 +4,9 @@ import json from '@rollup/plugin-json';
 import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 
+// 判断是否是生产环境
+const isProduction = process.env.NODE_ENV === 'production';
+
 // 基础插件配置
 const basePlugins = [
   resolve({ preferBuiltins: true }),
@@ -13,7 +16,7 @@ const basePlugins = [
     babelHelpers: 'bundled',
     exclude: 'node_modules/**'
   }),
-  terser({
+  isProduction && terser({
     compress: {
       drop_debugger: true
     },

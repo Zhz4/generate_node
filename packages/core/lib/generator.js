@@ -1,10 +1,17 @@
-import path from 'path';
 import Logger from './logging';
-
+import { ConfigManager } from './config/index.js';
+import { TemplateEngine } from './template/engine.js';
+import { OUTPUT_DIR } from './constants/index.js';
+import { writeFile } from './common/index.js';
+import { replaceVariables } from './utils/index.js';
 /**
  * 主要的代码生成器类
  */
 export class Generator {
+  constructor() {
+    this.configManager = new ConfigManager(process.cwd());
+    this.templateEngine = new TemplateEngine(process.cwd());
+  }
   /**
    * 生成代码
    * @param {Object} options - 生成选项
@@ -12,13 +19,12 @@ export class Generator {
    * @param {Object} options.config - 额外的配置
    * @returns {Promise<void>}
    */
-  async generate(config) {
+  async generate(modules) {
     try {
-      const modules = config.modules;
       for (const module of modules) {
-        await this.generateModule(module, config);
+        await this.generateModule(module);
       }
-      Logger.info(`📁 生成的文件位于: ${config.outputPath}`);
+      Logger.info(`📁 生成的文件位于: ${process.cwd()}/${OUTPUT_DIR}`);
     } catch (error) {
       Logger.error(`生成代码时出错: ${error}`);
       throw error;
@@ -31,20 +37,11 @@ export class Generator {
    * @param {Object} config - 全局配置
    * @returns {Promise<void>}
    */
-  async generateModule(module, config) {
-    // 检查任务配置
-    const task = await this.configManager.loadTask();
-    if (task.writeCoreModules && !task.writeCoreModules.includes(module.name)) {
-      return;
-    }
-
-    // 合并模块配置
+  async generateModule(module) {
     const moduleConfig = await this.configManager.loadModuleConfig(module.configList);
-    const mergedConfig = { ...config, ...moduleConfig };
-
     // 生成模块的每个模版
     for (const template of module.templates) {
-      await this.generateTemplate(template, mergedConfig);
+      await this.generateTemplate(template, moduleConfig);
     }
   }
 
@@ -56,84 +53,10 @@ export class Generator {
    */
   async generateTemplate(template, config) {
     // 替换模版配置中的变量
-    const processedTemplate = this.replaceVariables(template, config);
-    
+    const processedTemplate = replaceVariables(template, config);
     // 渲染模版
     const content = await this.templateEngine.render(processedTemplate.name, config);
-    
     // 写入文件
-    await this.writeFile(processedTemplate.outputName, content);
-  }
-
-  /**
-   * 替换变量
-   * @param {Object} template - 模版配置
-   * @param {Object} config - 配置数据
-   * @returns {Object} - 处理后的模版配置
-   */
-  replaceVariables(template, config) {
-    const result = { ...template };
-    
-    // 替换输出文件名中的变量
-    if (result.outputName) {
-      result.outputName = this.interpolateString(result.outputName, config);
-    }
-    
-    return result;
-  }
-
-  /**
-   * 字符串插值
-   * @param {string} str - 原始字符串
-   * @param {Object} data - 数据对象
-   * @returns {string} - 插值后的字符串
-   */
-  interpolateString(str, data) {
-    return str.replace(/\$\{([^}]+)\}/g, (match, key) => {
-      return data[key] || match;
-    });
-  }
-
-  /**
-   * 写入文件
-   * @param {string} fileName - 文件名
-   * @param {string} content - 文件内容
-   * @returns {Promise<void>}
-   */
-  async writeFile(fileName, content) {
-    const fs = await import('fs');
-    const outputDir = path.resolve(this.outputPath);
-    const filePath = path.join(outputDir, fileName);
-    
-    // 确保目录存在
-    await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
-    
-    // 写入文件
-    await fs.promises.writeFile(filePath, content, 'utf8');
-    Logger.info(`生成文件: ${filePath}`);
-  }
-
-  /**
-   * 更新配置管理器
-   * @param {ConfigManager} configManager - 新的配置管理器
-   */
-  updateConfigManager(configManager) {
-    this.configManager = configManager;
-  }
-
-  /**
-   * 更新模版引擎
-   * @param {TemplateEngine} templateEngine - 新的模版引擎
-   */
-  updateTemplateEngine(templateEngine) {
-    this.templateEngine = templateEngine;
-  }
-
-  /**
-   * 更新输出路径
-   * @param {string} outputPath - 新的输出路径
-   */
-  updateOutputPath(outputPath) {
-    this.outputPath = outputPath;
+    await writeFile(processedTemplate.outputName, content);
   }
 } 
