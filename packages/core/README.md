@@ -165,7 +165,3 @@ module.exports = router;
 ### TemplateEngine
 
 模版引擎，负责渲染模版文件。
-
-### FileUtils
-
-文件工具类，提供文件操作的辅助方法。
