@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
+import Logger from './logging';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +13,9 @@ export class Generator {
     this.configManager = options.configManager;
     this.templateEngine = options.templateEngine;
     this.outputPath = options.outputPath || './output';
+    this.logger = new Logger({
+      timestamp: true,
+    });
   }
 
   /**
@@ -33,9 +37,9 @@ export class Generator {
       for (const module of modules) {
         await this.generateModule(module, config);
       }
-      console.log('📁 生成的文件位于:', this.outputPath);
+      this.logger.info(`📁 生成的文件位于: ${this.outputPath}`);
     } catch (error) {
-      console.error('生成代码时出错:', error);
+      this.logger.error(`生成代码时出错: ${error}`);
       throw error;
     }
   }
@@ -125,7 +129,7 @@ export class Generator {
     
     // 写入文件
     await fs.promises.writeFile(filePath, content, 'utf8');
-    console.log(`生成文件: ${filePath}`);
+    this.logger.info(`生成文件: ${filePath}`);
   }
 
   /**

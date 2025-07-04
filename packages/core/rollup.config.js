@@ -15,7 +15,6 @@ const basePlugins = [
   }),
   terser({
     compress: {
-      drop_console: true,
       drop_debugger: true
     },
     mangle: {
