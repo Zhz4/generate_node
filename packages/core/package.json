@@ -4,9 +4,6 @@
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "bin": {
-    "generate": "dist/cli.js"
-  },
   "type": "module",
   "scripts": {
     "start": "node lib/index.js",

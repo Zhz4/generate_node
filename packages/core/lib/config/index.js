@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import yaml from 'js-yaml';
-import { CONFIG_FILE } from '../constants/index.js';
+import fs from "fs";
+import path from "path";
+import yaml from "js-yaml";
+import { CONFIG_FILE } from "../constants/index.js";
 /**
  * 配置管理器类
  */
@@ -17,12 +17,12 @@ export class ConfigManager {
     try {
       const configFile = path.join(this.configPath, CONFIG_FILE);
       if (await this.fileExists(configFile)) {
-        const content = await fs.promises.readFile(configFile, 'utf8');
-        return JSON.parse(content);
+        const configModule = await import(configFile);
+        return configModule.default;
       }
       return {};
     } catch (error) {
-      console.warn('加载默认配置失败:', error.message);
+      console.warn("加载默认配置失败:", error.message);
       return {};
     }
   }
@@ -34,22 +34,35 @@ export class ConfigManager {
    */
   async loadModuleConfig(configList = []) {
     const configs = [];
-    
+
     for (const configFile of configList) {
       try {
-        const filePath = path.isAbsolute(configFile) 
-          ? configFile 
+        const filePath = path.isAbsolute(configFile)
+          ? configFile
           : path.join(this.configPath, configFile);
-        
+
         if (await this.fileExists(filePath)) {
-          const content = await fs.promises.readFile(filePath, 'utf8');
-          configs.push(JSON.parse(content));
+          const fileExt = path.extname(filePath).toLowerCase();
+          let configData;
+
+          if (fileExt === ".js") {
+            // 处理JS格式的配置文件
+            const fileUrl = `file://${path.resolve(filePath)}`;
+            const configModule = await import(fileUrl);
+            configData = configModule.default || configModule;
+          } else {
+            // 处理JSON格式的配置文件
+            const content = await fs.promises.readFile(filePath, "utf8");
+            configData = JSON.parse(content);
+          }
+
+          configs.push(configData);
         }
       } catch (error) {
         console.warn(`加载配置文件 ${configFile} 失败:`, error.message);
       }
     }
-    
+
     return this.mergeConfigs(configs);
   }
 
@@ -59,14 +72,14 @@ export class ConfigManager {
    */
   async loadTask() {
     try {
-      const taskFile = path.join(this.configPath, 'task.yml');
+      const taskFile = path.join(this.configPath, "task.yml");
       if (await this.fileExists(taskFile)) {
-        const content = await fs.promises.readFile(taskFile, 'utf8');
+        const content = await fs.promises.readFile(taskFile, "utf8");
         return yaml.load(content);
       }
       return { writeCoreModules: [] };
     } catch (error) {
-      console.warn('加载任务配置失败:', error.message);
+      console.warn("加载任务配置失败:", error.message);
       return { writeCoreModules: [] };
     }
   }
@@ -77,14 +90,14 @@ export class ConfigManager {
    */
   async getModules() {
     try {
-      const modulesFile = path.join(this.configPath, 'modules.json');
+      const modulesFile = path.join(this.configPath, "modules.json");
       if (await this.fileExists(modulesFile)) {
-        const content = await fs.promises.readFile(modulesFile, 'utf8');
+        const content = await fs.promises.readFile(modulesFile, "utf8");
         return JSON.parse(content);
       }
       return [];
     } catch (error) {
-      console.warn('加载模块列表失败:', error.message);
+      console.warn("加载模块列表失败:", error.message);
       return [];
     }
   }
@@ -108,19 +121,19 @@ export class ConfigManager {
    */
   deepMerge(target, source) {
     const result = { ...target };
-    
+
     for (const key in source) {
       if (source.hasOwnProperty(key)) {
         if (Array.isArray(source[key])) {
           result[key] = [...(result[key] || []), ...source[key]];
-        } else if (typeof source[key] === 'object' && source[key] !== null) {
+        } else if (typeof source[key] === "object" && source[key] !== null) {
           result[key] = this.deepMerge(result[key] || {}, source[key]);
         } else {
           result[key] = source[key];
         }
       }
     }
-    
+
     return result;
   }
 
@@ -145,4 +158,4 @@ export class ConfigManager {
   setConfigPath(configPath) {
     this.configPath = configPath;
   }
-} 
+}
