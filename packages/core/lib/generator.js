@@ -1,23 +1,10 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
 import Logger from './logging';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 /**
  * 主要的代码生成器类
  */
 export class Generator {
-  constructor(options = {}) {
-    this.configManager = options.configManager;
-    this.templateEngine = options.templateEngine;
-    this.outputPath = options.outputPath || './output';
-    this.logger = new Logger({
-      timestamp: true,
-    });
-  }
-
   /**
    * 生成代码
    * @param {Object} options - 生成选项
@@ -25,21 +12,15 @@ export class Generator {
    * @param {Object} options.config - 额外的配置
    * @returns {Promise<void>}
    */
-  async generate(options = {}) {
+  async generate(config) {
     try {
-      // 加载配置
-      const config = await this.configManager.loadConfig(options.config);
-      
-      // 获取模块列表
-      const modules = options.modules || await this.configManager.getModules();
-      
-      // 生成每个模块
+      const modules = config.modules;
       for (const module of modules) {
         await this.generateModule(module, config);
       }
-      this.logger.info(`📁 生成的文件位于: ${this.outputPath}`);
+      Logger.info(`📁 生成的文件位于: ${config.outputPath}`);
     } catch (error) {
-      this.logger.error(`生成代码时出错: ${error}`);
+      Logger.error(`生成代码时出错: ${error}`);
       throw error;
     }
   }
@@ -129,7 +110,7 @@ export class Generator {
     
     // 写入文件
     await fs.promises.writeFile(filePath, content, 'utf8');
-    this.logger.info(`生成文件: ${filePath}`);
+    Logger.info(`生成文件: ${filePath}`);
   }
 
   /**

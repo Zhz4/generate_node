@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import Logger from '../logging/index.js';
 
 /**
  * 配置管理器类
@@ -9,6 +10,45 @@ export class ConfigManager {
   constructor(configPath) {
     this.configPath = configPath;
   }
+
+    /**
+   * 自动读取 generate.yml 配置文件
+   * @returns {Object} 配置对象
+   */
+    loadYamlConfig() {
+      try {
+        // 寻找 generate.yml 文件，优先级：当前目录 > 父级目录
+        const possiblePaths = [
+          path.join(process.cwd(), 'generate.yml'),
+        ];
+  
+        for (const configPath of possiblePaths) {
+          if (fs.existsSync(configPath)) {
+            console.log(`📄 找到配置文件: ${configPath}`);
+            const fileContents = fs.readFileSync(configPath, 'utf8');
+            const config = yaml.load(fileContents);
+            
+            // 转换相对路径为绝对路径
+            if (config.configPath && !path.isAbsolute(config.configPath)) {
+              config.configPath = path.resolve(path.dirname(configPath), config.configPath);
+            }
+            if (config.templatePath && !path.isAbsolute(config.templatePath)) {
+              config.templatePath = path.resolve(path.dirname(configPath), config.templatePath);
+            }
+            if (config.outputPath && !path.isAbsolute(config.outputPath)) {
+              config.outputPath = path.resolve(path.dirname(configPath), config.outputPath);
+            }
+            Logger.info(`✅ 成功加载配置文件`);
+            return config;
+          }
+        }
+        Logger.error(`⚠️  未找到 generate.yml 配置文件`);
+        return {};
+      } catch (error) {
+        Logger.error(`⚠️  读取配置文件失败: ${error.message}`);
+        return {};
+      }
+    }
 
   /**
    * 加载配置
