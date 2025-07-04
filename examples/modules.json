@@ -8,19 +8,19 @@
     "templates": [
       {
         "name": "template_api",
-        "outputName": "output/${apiFileName}.js"
+        "outputName": "api/${apiFileName}.js"
       },
       {
         "name": "template_table",
-        "outputName": "output/${apiFileName}-table.jsx"
+        "outputName": "tableConfig.jsx"
       },
       {
         "name": "template_edit",
-        "outputName": "output/${apiFileName}-edit.vue"
+        "outputName": "components/edit.vue"
       },
       {
         "name": "template_vue",
-        "outputName": "output/${apiFileName}-main.vue"
+        "outputName": "index.vue"
       }
     ]
   }

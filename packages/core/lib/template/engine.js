@@ -117,7 +117,10 @@ export class TemplateEngine {
             return json;
           }
         }
-        return JSON.stringify(json, null, 2);
+        // 转换为JavaScript对象字面量格式，避免Vue模板中的引号冲突
+        return JSON.stringify(json, null, 2)
+          .replace(/"/g, "'")  // 将双引号替换为单引号
+          .replace(/\n\s*/g, ' '); // 压缩为单行，避免模板换行问题
       },
       
       // 首字母大写

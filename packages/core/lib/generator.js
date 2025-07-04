@@ -33,8 +33,7 @@ export class Generator {
       for (const module of modules) {
         await this.generateModule(module, config);
       }
-      
-      console.log('代码生成完成！');
+      console.log('📁 生成的文件位于:', this.outputPath);
     } catch (error) {
       console.error('生成代码时出错:', error);
       throw error;

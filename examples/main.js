@@ -17,22 +17,11 @@ async function main() {
       outputPath: path.join(__dirname, './output')       // 输出路径
     });
 
-    // 设置自定义配置
-    const customConfig = {
-      projectName: 'OA管理系统',
-      author: '开发团队',
-      version: '1.0.0',
-      description: '这是一个自动生成的OA管理系统'
-    };
 
     // 生成代码
-    await generator.generate({
-      config: customConfig
-    });
-
-    console.log('✅ 代码生成完成！');
-    console.log('📁 生成的文件位于:', path.join(__dirname, './output'));
-    
+    await generator.generate();
+    // console.log('✅ 代码生成完成！');
+    // console.log('📁 生成的文件位于:', path.join(__dirname, './output'));
   } catch (error) {
     console.error('❌ 代码生成失败:', error.message);
     process.exit(1);

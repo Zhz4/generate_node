@@ -1,4 +1,0 @@
-# 需要执行的任务
-# 该任务位于core/modules目录下
-writeCoreModules:
-    - backend
