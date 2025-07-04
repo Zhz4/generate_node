@@ -11,10 +11,6 @@
     "test": "pnpm --filter @smooth_zhz/generate_node-examples run start",
     "test:cli": "pnpm --filter @smooth_zhz/generate_node-examples run generate",
     "test:cli:init": "pnpm --filter @smooth_zhz/generate_node-examples run generate:init",
-    "publish": "pnpm --filter @smooth_zhz/generate_node-core run publish",
-    "version:patch": "pnpm --filter @smooth_zhz/generate_node-core run version:patch",
-    "version:minor": "pnpm --filter @smooth_zhz/generate_node-core run version:minor",
-    "version:major": "pnpm --filter @smooth_zhz/generate_node-core run version:major",
     "release:patch": "pnpm --filter @smooth_zhz/generate_node-core run release:patch",
     "release:minor": "pnpm --filter @smooth_zhz/generate_node-core run release:minor",
     "release:major": "pnpm --filter @smooth_zhz/generate_node-core run release:major"
