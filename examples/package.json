@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./main.js",
-    "generate": "node ./main.js",
+    "generate": "npx @smooth_zhz/generate_node-core generate",
     "dev": "node ./main.js --watch"
   },
   "dependencies": {
@@ -16,4 +16,4 @@
   "devDependencies": {
     "nodemon": "^3.0.1"
   }
-} 
+}

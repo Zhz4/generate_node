@@ -9,6 +9,7 @@
     "dev": "pnpm --filter @smooth_zhz/generate_node-core run dev",
     "build": "pnpm --filter @smooth_zhz/generate_node-core run build",
     "test": "pnpm --filter @smooth_zhz/generate_node-examples run start",
+    "test:cli": "pnpm --filter @smooth_zhz/generate_node-examples run generate",
     "publish": "pnpm --filter @smooth_zhz/generate_node-core run publish",
     "version:patch": "pnpm --filter @smooth_zhz/generate_node-core run version:patch",
     "version:minor": "pnpm --filter @smooth_zhz/generate_node-core run version:minor",

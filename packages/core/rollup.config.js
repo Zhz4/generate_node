@@ -35,13 +35,13 @@ export default [
     plugins: basePlugins,
   },
   // CLI 入口
-  // {
-  //   input: 'lib/cli.js',
-  //   output: {
-  //     file: 'dist/cli.js',
-  //     format: 'es',
-  //     sourcemap: true
-  //   },
-  //   plugins: basePlugins
-  // }
+  {
+    input: "lib/cli.js",
+    output: {
+      file: "dist/cli.js",
+      format: "es",
+      sourcemap: true,
+    },
+    plugins: basePlugins,
+  },
 ];
