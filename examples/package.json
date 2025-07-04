@@ -1,5 +1,5 @@
 {
-  "name": "@generate_node/examples",
+  "name": "@smooth_zhz/generate_node/examples",
   "version": "1.0.0",
   "private": true,
   "description": "OA Generate Node Examples",
@@ -11,7 +11,7 @@
     "dev": "node ./main.js --watch"
   },
   "dependencies": {
-    "@generate_node/core": "workspace:*"
+    "@smooth_zhz/generate_node/core": "workspace:*"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

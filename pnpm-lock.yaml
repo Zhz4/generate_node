@@ -23,7 +23,7 @@ importers:
 
   examples:
     dependencies:
-      '@generate_node/core':
+      '@smooth_zhz/generate_node/core':
         specifier: workspace:*
         version: link:../packages/core
     devDependencies:

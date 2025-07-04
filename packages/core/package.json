@@ -1,5 +1,5 @@
 {
-  "name": "@generate_node/core",
+  "name": "@smooth_zhz/generate_node/core",
   "version": "1.0.0",
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.js",
@@ -14,7 +14,8 @@
     "build:dev": "npm run clean && rollup -c",
     "dev": "rollup -c -w",
     "clean": "rimraf dist",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public"
   },
   "keywords": [
     "code-generator",
