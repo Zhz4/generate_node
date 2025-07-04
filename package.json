@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "pnpm --filter @generate_node/core run start",
+    "build": "pnpm --filter @generate_node/core run build",
     "test": "pnpm --filter @generate_node/examples run start"
   },
   "dependencies": {
