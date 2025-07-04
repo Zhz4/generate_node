@@ -1,3 +1,7 @@
+import fs from "fs";
+import path from "path";
+import logging from "../logging";
+
 /**
  * 替换变量
  * @param {Object} template - 模版配置
@@ -23,4 +27,27 @@ export function interpolateString(str, data) {
   return str.replace(/\$\{([^}]+)\}/g, (match, key) => {
     return data[key] || match;
   });
+}
+
+/**
+ * 复制目录
+ * @param {string} src - 源目录路径
+ * @param {string} dest - 目标目录路径
+ */
+export async function copyDirectory(src, dest) {
+  await fs.promises.mkdir(dest, { recursive: true });
+  const files = await fs.promises.readdir(src);
+
+  for (const file of files) {
+    const srcPath = path.join(src, file);
+    const destPath = path.join(dest, file);
+    const stat = await fs.promises.stat(srcPath);
+
+    if (stat.isDirectory()) {
+      await copyDirectory(srcPath, destPath);
+    } else {
+      await fs.promises.copyFile(srcPath, destPath);
+      logging.info(`初始化文件 ${destPath}`);
+    }
+  }
 }
