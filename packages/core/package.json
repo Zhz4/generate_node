@@ -1,5 +1,5 @@
 {
-  "name": "@smooth_zhz/generate_node/core",
+  "name": "@smooth_zhz/generate_node-core",
   "version": "1.0.0",
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.js",

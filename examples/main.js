@@ -1,4 +1,4 @@
-import { Generate } from '@generate_node/core';
+import { Generate } from '@smooth_zhz/generate_node-core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
