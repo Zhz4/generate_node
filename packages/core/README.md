@@ -21,13 +21,13 @@ pnpm add @generate_node/core
 ## 快速开始
 
 ```javascript
-import { OAGenerator } from '@generate_node/core';
+import { Generator } from "@generate_node/core";
 
 // 创建生成器实例
-const generator = new OAGenerator({
-  configPath: './config',    // 配置文件路径
-  templatePath: './template', // 模版文件路径
-  outputPath: './output'     // 输出路径
+const generator = new Generator({
+  configPath: "./config", // 配置文件路径
+  templatePath: "./template", // 模版文件路径
+  outputPath: "./output", // 输出路径
 });
 
 // 生成代码
@@ -43,10 +43,11 @@ await generator.generate();
 #### 构造函数
 
 ```javascript
-new Generator(options)
+new Generator(options);
 ```
 
 **参数:**
+
 - `options.configPath` (string): 配置文件路径，默认为当前工作目录
 - `options.templatePath` (string): 模版文件路径，默认为当前工作目录
 - `options.outputPath` (string): 输出路径，默认为 `./output`
@@ -58,6 +59,7 @@ new Generator(options)
 生成代码。
 
 **参数:**
+
 - `options.modules` (Array): 要生成的模块列表（可选）
 - `options.config` (Object): 额外的配置对象（可选）
 
@@ -68,6 +70,7 @@ new Generator(options)
 设置配置文件路径。
 
 **参数:**
+
 - `path` (string): 配置文件路径
 
 ##### `setTemplatePath(path)`
@@ -75,6 +78,7 @@ new Generator(options)
 设置模版文件路径。
 
 **参数:**
+
 - `path` (string): 模版文件路径
 
 ##### `setOutputPath(path)`
@@ -82,6 +86,7 @@ new Generator(options)
 设置输出路径。
 
 **参数:**
+
 - `path` (string): 输出路径
 
 ## 配置文件
@@ -98,10 +103,7 @@ new Generator(options)
 [
   {
     "name": "backend",
-    "configList": [
-      "config/main_config.json",
-      "config/edit_config.json"
-    ],
+    "configList": ["config/main_config.json", "config/edit_config.json"],
     "templates": [
       {
         "name": "template_api",
