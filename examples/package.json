@@ -1,0 +1,11 @@
+{
+  "name": "oa_generate_examples",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OA Generate Node Examples",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./main.js"
+  }
+} 
