@@ -1,72 +1,167 @@
-# OA新后台代码生成器（node）
-## 前言
-为什么要写这个程序？  
-在写OA后台的时候会发现其实很多工作都是重复性的，后台的格式，模版基本都是大差不差，区别只是在业务逻辑上的不同。因此，像这些重复性的工作，其实可以让程序一键生成，我们只需要关注业务逻辑本身，通过逻辑修改代码，大大提高了工作效率，减少重复性工作
-## 使用说明
-只需要在配置文件中加入自己需要的内容即可  
-其中`edit_config.json`中配置的是编辑表单中的模版  
-```json
-{
-  "form_item_list": [
-    {
-      "label": "工号",
-      "key": "user"
-    }
-  ],
-  // 搜索筛选项
-  "tool_button_list": [
-    {
-      "button_name": "导入数据",
-      // 按钮名称
-      "handler": "handleInput",
-      // 事件函数名称
-      "icon_component": "ArrowDownCircleOutline"
-      // icon名称
-    }
-    // 工具行
-  ],
-  "table_list": [
-    {
-      "label": "工号",
-      "key": "user"
-    }
-    // jsx中表格字段
-  ],
-  "apiFileName": "", // api的文件名
-  "apiList": [] // 这里的是api配置
-}
+# OA Generate Node
+
+一个基于 Monorepo 架构的灵活代码生成工具，支持可配置的模版和设置。
+
+## 🏗️ 项目架构
+
 ```
-执行命令：  
- `pnpm install`   
- `pnpm run start`  
-包含 `index.vue`和`tableConfig.jsx`,`api`,`EditModel`文件，只需要将该文件复制粘贴到后台项目中便可以执行
-注意：代码是没有进行格式化的（但任然不影响阅读），因此需要在vscode中格式化一下代码（最好！）
+OA_generate_node/
+├── packages/
+│   └── core/                 # 核心代码生成包
+│       ├── lib/              # 核心库代码
+│       │   ├── index.js      # 主入口文件
+│       │   ├── generator.js  # 代码生成器
+│       │   ├── cli.js        # CLI工具
+│       │   ├── config/       # 配置管理
+│       │   ├── template/     # 模版引擎
+│       │   └── utils/        # 工具类
+│       ├── examples/         # 配置和模版示例
+│       ├── package.json      # 包配置
+│       └── README.md         # 包文档
+├── examples/                 # 完整使用示例
+│   ├── config/               # 配置文件
+│   ├── template/             # 模版文件
+│   ├── modules.json          # 模块配置
+│   ├── task.yml              # 任务配置
+│   ├── main.js               # 示例主文件
+│   └── package.json          # 示例包配置
+├── pnpm-workspace.yaml       # pnpm workspace 配置
+└── README.md                 # 项目文档
+```
 
-## 待更新内容
+## 🚀 快速开始
 
-- 搜索筛选项中目前只有 input 模版，后续会加入下拉，时间，部门等常用模版 下拉✔️
-- 编辑弹窗也是经常会使用到的功能，后续加入编辑弹窗模版 ✔️
-- api文件以及常用增删改查逻辑等... ️✔️查询，删除
-## 演示
-![演示gif](./doc/img/18.gif)
+### 1. 安装依赖
 
-## 新增模版
-1. 首先需要在template/ejs中新建.ejs文件，其模版语法可参看 ejs模版语法
-2. 模版中的变量从何而来？
-   - 模版中对应的变量名其实就是 `/config/xxx.json `配置文件中的各个key
-3. 关联模版以及对应的配置文件还有输出文件
-   - 在`/relations/modules/xxx.js`中可以用于关联模版以及配置文件，有时候多个模版之间可能会用到同样的config文件，因此在configList中可以关联多个模版，实际上templates 中以及configList 中是相互关联的，templates中的所有模版都可以使用configList中的变量。因此，在配置configList文件中的key不能重复。`templates` 中的`outpushName`用于配置输出路径
-4. 注册执行任务，在`config/task：writeCoreModules`中可以用于配置需要执行的任务。其任务名对应 `/relations/modules/xxx.js` 中的name 
+```bash
+pnpm install
+```
 
-## 对比原来python版本中的更新点
-1. 生成的代码是完全已经格式化好的，也就是说可以完全按照模版中的格式来进行生成
-2. 代码逻辑可以写在[ejs](https://ejs.bootcss.com/#install)模版中，开发起来更加顺手和简洁
-3. 新增了任务配置项，可以选择指定多种模版生成
-4. 模版以及配置项之间关系更加清晰
+### 2. 运行示例
 
-最重要的是新增以及修改模版更加方便了！！
+```bash
+cd examples
+pnpm start
+```
 
-## 根据配置文件生成的代码展示
-[查看代码](./doc/demoCode.md)
-[配置介绍](./doc/Instructions.md)
+### 3. 安装核心包
+
+```bash
+pnpm add @oa_generate_node/core
+```
+
+## 📦 包说明
+
+### @oa_generate_node/core
+
+核心代码生成包，提供：
+
+- **OAGenerator**: 主要的代码生成器类
+- **ConfigManager**: 配置管理器
+- **TemplateEngine**: 模版引擎
+- **FileUtils**: 文件工具类
+- **CLI工具**: 命令行接口
+
+### examples
+
+完整的使用示例，展示如何：
+
+- 配置项目
+- 定义模版
+- 生成代码
+- 自定义输出
+
+## 🎯 设计理念
+
+### 关注点分离
+
+- **核心功能**: 在 `packages/core` 中，作为独立的npm包
+- **配置文件**: 在用户项目中，支持自定义配置
+- **模版文件**: 在用户项目中，支持自定义模版
+- **示例代码**: 在 `examples` 中，展示最佳实践
+
+### 灵活配置
+
+- **外部配置**: 配置文件不打包在核心包内
+- **模版分离**: 模版文件不打包在核心包内
+- **路径配置**: 支持自定义配置和模版路径
+- **模块化**: 支持按模块生成代码
+
+## 🔧 使用方法
+
+### 编程式使用
+
+```javascript
+import { OAGenerator } from '@oa_generate_node/core';
+
+const generator = new OAGenerator({
+  configPath: './config',
+  templatePath: './template',
+  outputPath: './output'
+});
+
+await generator.generate();
+```
+
+### CLI使用
+
+```bash
+# 生成代码
+oa-generate generate -c ./config -t ./template -o ./output
+
+# 指定模块
+oa-generate generate -m backend,frontend
+
+# 初始化项目
+oa-generate init
+```
+
+## 📋 配置文件
+
+### 主配置文件 (main_config.json)
+
+定义表单字段、工具按钮、表格列等基础配置。
+
+### 模块配置文件 (modules.json)
+
+定义模块的配置文件列表和模版列表。
+
+### 任务配置文件 (task.yml)
+
+定义哪些模块需要生成代码。
+
+## 🎨 模版系统
+
+- **EJS模版引擎**: 支持条件渲染、循环渲染、变量替换
+- **内置工具函数**: 提供常用的字符串转换函数
+- **模版缓存**: 提高渲染性能
+- **多扩展名支持**: 支持 .ejs、.html、.htm 文件
+
+## 🛠️ 开发指南
+
+### 添加新功能
+
+1. 在 `packages/core/lib` 中添加新的模块
+2. 在 `packages/core/lib/index.js` 中导出新模块
+3. 在 `examples` 中添加使用示例
+4. 更新文档
+
+### 发布包
+
+```bash
+cd packages/core
+npm publish
+```
+
+## 📄 许可证
+
+ISC
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 📞 支持
+
+如有问题，请提交 Issue 或联系开发团队。
 

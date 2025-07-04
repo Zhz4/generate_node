@@ -1,11 +1,12 @@
 {
-  "name": "@oa_generate_node",
+  "name": "@generate_node",
   "version": "1.0.0",
   "private": true,
   "description": "为什么要写这个程序？  \r 在写OA后台的时候会发现其实很多工作都是重复性的，后台的格式，模版基本都是大差不差，区别只是在业务逻辑上的不同。因此，像这些重复性的工作，其实可以让程序一键生成，我们只需要关注业务逻辑本身，通过逻辑修改代码，大大提高了工作效率，减少重复性工作\r ## 使用说明\r 只需要在配置文件中加入自己需要的内容即可  \r 其中`edit_config.json`中配置的是编辑表单中的模版  \r ```json\r {\r   \"form_item_list\": [\r     {\r       \"label\": \"工号\",\r       \"key\": \"user\"\r     }\r   ],\r   // 搜索筛选项\r   \"tool_button_list\": [\r     {\r       \"button_name\": \"导入数据\",\r       // 按钮名称\r       \"handler\": \"handleInput\",\r       // 事件函数名称\r       \"icon_component\": \"ArrowDownCircleOutline\"\r       // icon名称\r     }\r     // 工具行\r   ],\r   \"table_list\": [\r     {\r       \"label\": \"工号\",\r       \"key\": \"user\"\r     }\r     // jsx中表格字段\r   ],\r   \"apiFileName\": \"\", // api的文件名\r   \"apiList\": [] // 这里的是api配置\r }\r ```\r 执行命令：  \r  `pnpm install`   \r  `pnpm run start`  \r 包含 `index.vue`和`tableConfig.jsx`,`api`,`EditModel`文件，只需要将该文件复制粘贴到后台项目中便可以执行\r 注意：代码是没有进行格式化的（但任然不影响阅读），因此需要在vscode中格式化一下代码（最好！）",
   "type": "module",
   "scripts": {
-    "start": "pnpm --filter @oa_generate_node/core run start"
+    "start": "pnpm --filter @generate_node/core run start",
+    "test": "pnpm --filter @generate_node/examples run start"
   },
   "dependencies": {
     "ejs": "^3.1.10",

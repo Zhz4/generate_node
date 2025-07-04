@@ -1,7 +1,7 @@
-/target/
-/.idea/
-/.settings/
-/.vscode/
-/bin/
-/output/
-/node_modules/
+target/
+.idea/
+.settings/
+.vscode/
+bin/
+output/
+node_modules/

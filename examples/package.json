@@ -1,11 +1,19 @@
 {
-  "name": "oa_generate_examples",
+  "name": "@generate_node/examples",
   "version": "1.0.0",
   "private": true,
   "description": "OA Generate Node Examples",
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "start": "node ./main.js"
+    "start": "node ./main.js",
+    "generate": "node ./main.js",
+    "dev": "node ./main.js --watch"
+  },
+  "dependencies": {
+    "@generate_node/core": "workspace:*"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 } 
