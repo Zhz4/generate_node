@@ -1,4 +1,4 @@
-# @oa_generate_node/core
+# @generate_node/core
 
 一个灵活的代码生成工具，支持可配置的模版和设置。
 
@@ -13,15 +13,15 @@
 ## 安装
 
 ```bash
-npm install @oa_generate_node/core
+npm install @generate_node/core
 # 或者
-pnpm add @oa_generate_node/core
+pnpm add @generate_node/core
 ```
 
 ## 快速开始
 
 ```javascript
-import { OAGenerator } from '@oa_generate_node/core';
+import { OAGenerator } from '@generate_node/core';
 
 // 创建生成器实例
 const generator = new OAGenerator({
@@ -43,7 +43,7 @@ await generator.generate();
 #### 构造函数
 
 ```javascript
-new OAGenerator(options)
+new Generator(options)
 ```
 
 **参数:**
@@ -169,7 +169,3 @@ module.exports = router;
 ### FileUtils
 
 文件工具类，提供文件操作的辅助方法。
-
-## 许可证
-
-ISC 

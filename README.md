@@ -1,4 +1,4 @@
-# OA Generate Node
+# Generate Node
 
 一个基于 Monorepo 架构的灵活代码生成工具，支持可配置的模版和设置。
 
@@ -47,12 +47,12 @@ pnpm start
 ### 3. 安装核心包
 
 ```bash
-pnpm add @oa_generate_node/core
+pnpm add @generate_node/core
 ```
 
 ## 📦 包说明
 
-### @oa_generate_node/core
+### @generate_node/core
 
 核心代码生成包，提供：
 
@@ -152,16 +152,3 @@ oa-generate init
 cd packages/core
 npm publish
 ```
-
-## 📄 许可证
-
-ISC
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-## 📞 支持
-
-如有问题，请提交 Issue 或联系开发团队。
-
