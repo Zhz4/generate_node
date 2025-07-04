@@ -1,6 +1,6 @@
 {
   "name": "@smooth_zhz/generate_node-core",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -15,9 +15,9 @@
     "dev": "rollup -c -w",
     "clean": "rimraf dist",
     "prepublishOnly": "npm run build",
-    "release:patch": "npm run version:patch && npm run publish && git push && git push --tags",
-    "release:minor": "npm run version:minor && npm run publish && git push && git push --tags",
-    "release:major": "npm run version:major && npm run publish && git push && git push --tags"
+    "release:patch": "npm version patch && npm publish && git push && git push --tags",
+    "release:minor": "npm version minor && npm publish && git push && git push --tags",
+    "release:major": "npm version major && npm publish && git push && git push --tags"
   },
   "keywords": [
     "code-generator",
