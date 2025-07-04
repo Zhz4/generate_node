@@ -1,12 +1,12 @@
-# OA Generate Node 使用指南
+# Generate Node 使用指南
 
 ## 架构升级说明
 
-我们已经将原有的架构重新设计为适合npm包的Monorepo结构：
+已经将原有的架构重新设计为适合npm包的Monorepo结构：
 
 ### 🔄 主要变更
 
-1. **核心功能包化**: 将核心功能抽离为独立的npm包 `@oa_generate_node/core`
+1. **核心功能包化**: 将核心功能抽离为独立的npm包 `@smooth_zhz/generate_node-core`
 2. **配置外部化**: 配置文件和模版文件不再打包在核心包内，而是在用户项目中
 3. **示例分离**: 提供完整的使用示例在 `examples` 目录中
 4. **API标准化**: 提供统一的API接口和CLI工具
@@ -43,7 +43,7 @@
 
 1. **安装核心包**:
    ```bash
-   npm install @oa_generate_node/core
+   npm install @smooth_zhz/generate_node-core
    ```
 
 2. **创建项目结构**:
@@ -61,9 +61,9 @@
 
 3. **编写生成脚本**:
    ```javascript
-   import { OAGenerator } from '@oa_generate_node/core';
+   import {Generator } from '@smooth_zhz/generate_node-core';
    
-   const generator = new OAGenerator({
+   const generator = new Generator({
      configPath: './config',
      templatePath: './template',
      outputPath: './output'
@@ -180,13 +180,13 @@ npm install -g @oa_generate_node/core
 
 ```bash
 # 生成代码
-oa-generate generate -c ./config -t ./template -o ./output
+generate generate -c ./config -t ./template -o ./output
 
 # 指定模块
-oa-generate generate -m backend,frontend
+generate generate -m backend,frontend
 
 # 初始化项目
-oa-generate init
+generate init
 ```
 
 ## 编程式API
@@ -194,9 +194,9 @@ oa-generate init
 ### 基本用法
 
 ```javascript
-import { OAGenerator } from '@oa_generate_node/core';
+import { Generator } from '@smooth_zhz/generate_node-core';
 
-const generator = new OAGenerator({
+const generator = new Generator({
   configPath: './config',
   templatePath: './template',
   outputPath: './output'
@@ -208,7 +208,7 @@ await generator.generate();
 ### 高级用法
 
 ```javascript
-import { OAGenerator, ConfigManager, TemplateEngine } from '@oa_generate_node/core';
+import { Generator, ConfigManager, TemplateEngine } from '@smooth_zhz/generate_node-core';
 
 // 自定义配置管理器
 const configManager = new ConfigManager('./config');
@@ -258,10 +258,6 @@ await generator.generate({
 }
 ```
 
-### Q: 如何跳过某些模块？
-
-修改 `task.yml` 中的 `writeCoreModules` 列表，只包含需要生成的模块。
-
 ## 最佳实践
 
 1. **配置文件分离**: 将不同类型的配置分别放在不同的文件中
@@ -304,5 +300,3 @@ getUtilityFunctions() {
 
 1. 查看 `examples/` 目录中的示例
 2. 阅读 `packages/core/README.md` 文档
-3. 提交 Issue 到项目仓库
-4. 联系开发团队 

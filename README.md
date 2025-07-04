@@ -47,12 +47,12 @@ pnpm start
 ### 3. 安装核心包
 
 ```bash
-pnpm add @generate_node/core
+pnpm add @smooth_zhz/generate_node-core
 ```
 
 ## 📦 包说明
 
-### @generate_node/core
+### @smooth_zhz/generate_node-core
 
 核心代码生成包，提供：
 
@@ -92,7 +92,7 @@ pnpm add @generate_node/core
 ### 编程式使用
 
 ```javascript
-import { Generator } from '@generate_node/core';
+import { Generator } from '@smooth_zhz/generate_node-core';
 
 const generator = new Generator({
   configPath: './config',
