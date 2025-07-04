@@ -1,0 +1,139 @@
+{
+  "_comment": "这个配置文件包含用户相关的标签和工具按钮",
+  "main_form_item_list": [{
+      "label": "工号",
+      "key": "jobNum"
+    },
+    {
+      "label": "姓名",
+      "key": "name"
+    },
+    {
+      "label": "部门",
+      "key": "deptName"
+    },
+    {
+      "label": "职位",
+      "key": "positionName"
+    },
+    {
+      "label": "入职时间",
+      "key": "entryDate",
+      "type": "daterange",
+      "startField": "entryDateStartTime",
+      "endField": "entryDateEndTime",
+      "timeformat": "YYYY-MM-DD"
+    },
+    {
+      "label": "是否在职",
+      "key": "user",
+      "type": "select",
+      "options": [{
+          "label": "在职",
+          "value": "1"
+        },
+        {
+          "label": "离职",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "label": "最近合同状态",
+      "key": "latestContractStatus"
+    }
+  ],
+  "tool_button_list": [{
+      "button_name": "导入数据",
+      "type": "import",
+      "handler": "handleInput"
+    },
+    {
+      "button_name": "下载导入模版",
+      "handler": "handleExport",
+      "type":"importTemplate",
+      "link":"http://soundasia.oss-cn-shenzhen.aliyuncs.com/colleagueBar/xlsx/2023/12/26/1703554813483.xlsx",
+      "icon_component": "ArrowDownCircleOutline"
+    },
+    {
+      "button_name": "导出数据",
+      "handler": "handleExport",
+      "type":"export",
+      "exportFileName": "劳动合同续签",
+      "icon_component": "ArrowDownCircleOutline"
+    },
+    {
+      "button_name": "批量删除",
+      "handler": "handleBatchDelete",
+      "icon_component": "ArrowDownCircleOutline"
+    },
+    {
+      "button_name": "批量修改",
+      "handler": "handleBatchEdit",
+      "icon_component": "ArrowDownCircleOutline"
+    }
+  ],
+  "table_list": [{
+      "label": "工号",
+      "key": "jobNum"
+    },
+    {
+      "label": "姓名",
+      "key": "name"
+    },
+    {
+      "label": "部门",
+      "key": "deptName"
+    },
+    {
+      "label": "职位",
+      "key": "positionName"
+    },
+    {
+      "label": "入职日期",
+      "key": "entryDate"
+    },
+    {
+      "label": "最近续签状态",
+      "key": "latestContractStatus"
+    },
+    {
+      "label": "劳动合同期限详情",
+      "key": "details"
+    }
+  ],
+  "apiFileName": "dealWithContract",
+  "apiList": [{
+      "_comment": "查询接口",
+      "remark": "列表",
+      "command": "select",
+      "url": "/contractManagementRecord/list",
+      "method": "get",
+      "handlerName": "list"
+    },
+    {
+      "_comment": "删除接口",
+      "remark": "删除",
+      "command": "delete",
+      "url": "/contractManagementRecord/deleteContractRecord",
+      "method": "post",
+      "handlerName": "deleteContractRecord"
+    },
+    {
+      "_comment": "导入接口",
+      "remark": "导入",
+      "command": "import",
+      "url": "/ckEmployeeUtilityBills/importExcel",
+      "method": "post",
+      "handlerName": "importExcel"
+    },
+    {
+      "_comment": "导出接口",
+      "remark": "导出",
+      "command": "export",
+      "url": "/ckEmployeeUtilityBills/export",
+      "method": "post",
+      "handlerName": "exportData"
+    }
+  ]
+}

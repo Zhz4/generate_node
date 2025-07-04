@@ -18,16 +18,18 @@ program
     }
   });
 
-// program
-//   .command("init")
-//   .description("初始化项目配置")
-//   .action(async (options) => {
-//     try {
-//       console.log("🚀 初始化项目配置...");
-//     } catch (error) {
-//       console.error("❌ 初始化失败:", error.message);
-//       process.exit(1);
-//     }
-//   });
+program
+  .command("generate:init")
+  .description("初始化项目配置")
+  .action(async (options) => {
+    try {
+      console.log("🚀 初始化项目配置...");
+      const generator = new Generate();
+      await generator.init();
+    } catch (error) {
+      console.error("❌ 初始化失败:", error.message);
+      process.exit(1);
+    }
+  });
 
 program.parse();
