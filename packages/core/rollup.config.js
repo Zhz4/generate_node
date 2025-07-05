@@ -28,8 +28,9 @@ const basePlugins = [
 const copyPlugin = copy({
   targets: [{ src: "lib/initTemplate", dest: "dist" }],
 });
+
 export default [
-  // 主入口 - 包含文件复制
+  // 主入口 - ES 模块格式
   {
     input: "lib/index.js",
     output: {
@@ -39,12 +40,32 @@ export default [
     },
     plugins: [...basePlugins, copyPlugin],
   },
-  // CLI 入口
+  // 主入口 - CommonJS 格式
+  {
+    input: "lib/index.js",
+    output: {
+      file: "dist/index.cjs",
+      format: "cjs",
+      sourcemap: true,
+    },
+    plugins: [...basePlugins, copyPlugin],
+  },
+  // CLI 入口 - ES 模块格式
   {
     input: "lib/cli.js",
     output: {
       file: "dist/cli.js",
       format: "es",
+      sourcemap: true,
+    },
+    plugins: basePlugins,
+  },
+  // CLI 入口 - CommonJS 格式
+  {
+    input: "lib/cli.js",
+    output: {
+      file: "dist/cli.cjs",
+      format: "cjs",
       sourcemap: true,
     },
     plugins: basePlugins,
