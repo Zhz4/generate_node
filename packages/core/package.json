@@ -1,6 +1,6 @@
 {
   "name": "@smooth_zhz/generate_node-core",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -12,7 +12,7 @@
     }
   },
   "bin": {
-    "generate": "./dist/cli.cjs"
+    "generate": "./dist/cli.js"
   },
   "scripts": {
     "start": "node lib/index.js",
