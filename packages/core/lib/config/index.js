@@ -18,13 +18,12 @@ export class ConfigManager {
     try {
       const configFile = path.join(this.configPath, CONFIG_FILE);
       if (await this.fileExists(configFile)) {
-        const fileUrl = pathToFileURL(path.resolve(configFile)).href;
-        const configModule = await import(fileUrl);
-        return configModule.default;
+        const content = await fs.promises.readFile(configFile, "utf8");
+        return JSON.parse(content);
       }
       return {};
     } catch (error) {
-      console.warn("加载默认配置失败:", error.message);
+      console.warn("加载配置失败:", error.message);
       return {};
     }
   }

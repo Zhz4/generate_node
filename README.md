@@ -65,7 +65,7 @@ await generator.generate(); // 生成配置中所有模块
 
 - **template/** - 模版文件目录，使用 [EJS](https://ejs.bootcss.com/#promo) 语法编写
 - **config/** - 配置文件目录，存储变量数据供模版使用
-- **generate.config.js** - 主配置文件，连接模版和配置
+- **generate.config.json** - 主配置文件，连接模版和配置
 
 ### ⚙️ 主配置文件参数
 

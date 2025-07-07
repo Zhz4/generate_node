@@ -1,0 +1,21 @@
+[{
+    "name": "backend",
+    "configList": ["config/main_config.json", "config/edit_config.json"],
+    "templates": [{
+            "name": "template/template_api",
+            "outputName": "api/${apiFileName}.js"
+        },
+        {
+            "name": "template/template_table",
+            "outputName": "tableConfig.jsx"
+        },
+        {
+            "name": "template/template_edit",
+            "outputName": "components/edit.vue"
+        },
+        {
+            "name": "template/template_vue",
+            "outputName": "index.vue"
+        }
+    ]
+}]
