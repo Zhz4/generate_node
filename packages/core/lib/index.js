@@ -14,16 +14,38 @@ export class Generate {
     this.generator = new Generator();
     this.path = process.cwd();
   }
+
+  /**
+   * 获取所有可用的模块
+   * @returns {Promise<Array>} 模块列表
+   */
+  async getAvailableModules() {
+    const config = await this.configManager.loadConfig();
+    const modules = Array.isArray(config) ? config : [];
+    return modules;
+  }
+
   /**
    * 生成代码
-   * @param {Object} options - 生成选项
+   * @param {Array} selectedModuleNames - 选择的模块名称列表，如果为空则生成所有模块
    * @returns {Promise<void>}
    */
-  async generate() {
+  async generate(selectedModuleNames = []) {
     const config = await this.configManager.loadConfig();
-    // 确保config是一个数组
-    const modules = Array.isArray(config) ? config : [];
-    return await this.generator.generate(modules);
+    const allModules = Array.isArray(config) ? config : [];
+    // 如果没有选择模块，则生成所有模块
+    let modulesToGenerate = allModules;
+    // 如果有选择的模块，则只生成选中的模块
+    if (selectedModuleNames && selectedModuleNames.length > 0) {
+      modulesToGenerate = allModules.filter((module) =>
+        selectedModuleNames.includes(module.name)
+      );
+    }
+    if (modulesToGenerate.length === 0) {
+      Logger.error("没有找到可用的模块");
+      return;
+    }
+    return await this.generator.generate(modulesToGenerate);
   }
 
   /**

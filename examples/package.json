@@ -6,10 +6,9 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "start": "node ./main.js",
-    "generate": "npx @smooth_zhz/generate_node-core generate",
-    "generate:init": "npx @smooth_zhz/generate_node-core generate:init",
-    "dev": "node ./main.js --watch"
+    "start": "node main.js",
+    "code": "npx @smooth_zhz/generate_node-core code",
+    "init": "npx @smooth_zhz/generate_node-core init"
   },
   "dependencies": {
     "@smooth_zhz/generate_node-core": "workspace:*"

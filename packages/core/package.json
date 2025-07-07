@@ -1,6 +1,6 @@
 {
   "name": "@smooth_zhz/generate_node-core",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -38,6 +38,7 @@
     "commander": "^11.1.0",
     "dayjs": "^1.11.13",
     "ejs": "^3.1.10",
+    "inquirer": "^12.7.0",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
