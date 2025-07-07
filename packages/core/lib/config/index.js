@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
+import { pathToFileURL } from "url";
 import { CONFIG_FILE } from "../constants/index.js";
 /**
  * 配置管理器类
@@ -17,7 +18,8 @@ export class ConfigManager {
     try {
       const configFile = path.join(this.configPath, CONFIG_FILE);
       if (await this.fileExists(configFile)) {
-        const configModule = await import(configFile);
+        const fileUrl = pathToFileURL(path.resolve(configFile)).href;
+        const configModule = await import(fileUrl);
         return configModule.default;
       }
       return {};
@@ -47,7 +49,7 @@ export class ConfigManager {
 
           if (fileExt === ".js") {
             // 处理JS格式的配置文件
-            const fileUrl = `file://${path.resolve(filePath)}`;
+            const fileUrl = pathToFileURL(path.resolve(filePath)).href;
             const configModule = await import(fileUrl);
             configData = configModule.default || configModule;
           } else {

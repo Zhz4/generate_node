@@ -21,7 +21,9 @@ export class Generate {
    */
   async generate() {
     const config = await this.configManager.loadConfig();
-    return await this.generator.generate(config);
+    // 确保config是一个数组
+    const modules = Array.isArray(config) ? config : [];
+    return await this.generator.generate(modules);
   }
 
   /**
