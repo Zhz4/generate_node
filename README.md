@@ -49,14 +49,16 @@ generate code
 ### 项目中使用
 
 ```js
-import { Generate } from "@smooth_zhz/generate_node-core";
+import { generator } from "@smooth_zhz/generate_node-core";
 
 // 创建生成器实例
-const generator = new Generate();
 // 生成代码
 await generator.generate(); // 生成配置中所有模块
 // 生成配置中指定模块
-// await generator.generate(["backend"]); // 生成配置中所有模块
+await generator.generate(["backend"]); // 生成配置中所有模块
+// 获取所有可用的模块
+const modules = await generator.getAvailableModules();
+console.log(modules);
 ```
 
 ## 📋 配置文件说明

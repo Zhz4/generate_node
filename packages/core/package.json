@@ -5,6 +5,7 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "type": "module",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zhz4/generate_node.git",
@@ -12,9 +13,16 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./*": "./*"
   },
   "bin": {
     "generate": "./dist/cli.js"
@@ -44,7 +52,9 @@
     "dayjs": "^1.11.13",
     "ejs": "^3.1.10",
     "inquirer": "^12.7.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-typescript2": "^0.36.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -55,16 +65,20 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.0",
     "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/ejs": "^3.1.5",
+    "@types/js-yaml": "^4.0.9",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.0",
     "rollup": "^4.0.0",
-    "rollup-plugin-copy": "^3.5.0"
+    "rollup-plugin-copy": "^3.5.0",
+    "typescript": "^5.8.3"
   },
   "files": [
     "dist/**/*",
     "README.md"
   ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   }
 }
