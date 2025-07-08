@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import logging from "../logging";
-import { Template } from "@core/types";
+import { Template } from "../types";
 
 /**
  * 替换变量

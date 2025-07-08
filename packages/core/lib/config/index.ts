@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
 import { CONFIG_FILE } from "../constants/index.js";
-import { fileExists } from "@core/utils/index.js";
+import { fileExists } from "../utils/index.js";
 /**
  * 配置管理器类
  */

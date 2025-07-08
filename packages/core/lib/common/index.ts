@@ -1,6 +1,6 @@
 import path from "path";
-import Logger from "@core/logging";
-import { OUTPUT_DIR } from "@core/constants";
+import Logger from "../logging";
+import { OUTPUT_DIR } from "../constants";
 /**
  * 写入文件
  * @param fileName - 文件名

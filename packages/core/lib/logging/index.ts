@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import dayjs from "dayjs";
-import { LoggerLevel, LoggerLevelConfig } from "@core/types/logger";
+import { LoggerLevel, LoggerLevelConfig } from "../types/logger";
 
 chalk.level = 1;
 

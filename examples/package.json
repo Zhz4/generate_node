@@ -6,7 +6,7 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "start": "node main.js",
+    "start": "node ./main.js",
     "code": "npx @smooth_zhz/generate_node-core code",
     "init": "npx @smooth_zhz/generate_node-core init"
   },
