@@ -34,7 +34,7 @@ const basePlugins = [
   }),
   isProduction &&
     terser({
-      ecma: 2017, // ← 支持 ES6+
+      ecma: 2017,
       compress: {
         drop_debugger: true,
       },

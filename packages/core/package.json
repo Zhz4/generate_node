@@ -11,6 +11,9 @@
     "url": "git+https://github.com/Zhz4/generate_node.git",
     "directory": "packages/core"
   },
+  "bugs": {
+    "url": "https://github.com/Zhz4/generate_node/issues"
+  },
   "exports": {
     ".": {
       "import": {
