@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { generator } from "@core/index";
+import { dev } from "@core/devServe";
 import { program } from "commander";
 import inquirer from "inquirer";
 
@@ -61,6 +62,18 @@ program
         "❌ 初始化失败:",
         error instanceof Error ? error.message : error
       );
+      process.exit(1);
+    }
+  });
+
+program
+  .command("dev")
+  .description("开发模式")
+  .action(async (options) => {
+    try {
+      dev();
+    } catch (error) {
+      console.error("❌ 开发模式失败:", error);
       process.exit(1);
     }
   });

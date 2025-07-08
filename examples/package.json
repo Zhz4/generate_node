@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node ./main.js",
     "code": "npx @smooth_zhz/generate_node-core code",
-    "init": "npx @smooth_zhz/generate_node-core init"
+    "init": "npx @smooth_zhz/generate_node-core init",
+    "dev": "npx @smooth_zhz/generate_node-core dev"
   },
   "dependencies": {
     "@smooth_zhz/generate_node-core": "workspace:*"

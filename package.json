@@ -11,6 +11,7 @@
     "test": "pnpm --filter @smooth_zhz/generate_node-examples run start",
     "test:code": "pnpm --filter @smooth_zhz/generate_node-examples run code",
     "test:init": "pnpm --filter @smooth_zhz/generate_node-examples run init",
+    "test:dev": "pnpm --filter @smooth_zhz/generate_node-examples run dev",
     "release:patch": "pnpm --filter @smooth_zhz/generate_node-core run release:patch",
     "release:minor": "pnpm --filter @smooth_zhz/generate_node-core run release:minor",
     "release:major": "pnpm --filter @smooth_zhz/generate_node-core run release:major"
