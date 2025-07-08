@@ -30,13 +30,12 @@ Generate Node 通过模版化的方式，让您只需要修改配置文件，其
 
 ## 🚀 快速开始
 
-### 1. 安装依赖
+### CLI 使用（ 推荐 ）
 
 ```bash
+# 全局安装依赖
 npm install -g @smooth_zhz/generate_node-core
 ```
-
-### CLI 使用
 
 ```bash
 # 初始化项目-生成示例配置
@@ -48,16 +47,21 @@ generate code
 
 ### 项目中使用
 
+```bash
+# 项目中安装依赖
+npm install @smooth_zhz/generate_node-core
+```
+
 ```js
 import { generator } from "@smooth_zhz/generate_node-core";
 
-// 创建生成器实例
+// 获取所有可用的模块
+const modules = await generator.getAvailableModules();
 // 生成代码
 await generator.generate(); // 生成配置中所有模块
 // 生成配置中指定模块
 await generator.generate(["backend"]); // 生成配置中所有模块
-// 获取所有可用的模块
-const modules = await generator.getAvailableModules();
+
 console.log(modules);
 ```
 
