@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { Generate } from "@core/index";
+import Generate from "@core/index";
 import { program } from "commander";
 import inquirer from "inquirer";
 

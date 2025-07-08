@@ -1,4 +1,4 @@
-import { Generate } from "@smooth_zhz/generate_node-core";
+import Generate from "@smooth_zhz/generate_node-core";
 
 async function main() {
   console.log("🚀 OA Generator 代码生成示例");

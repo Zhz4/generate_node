@@ -1,5 +1,4 @@
 import { Generator } from "./generator.js";
-import { TemplateEngine } from "./template/engine.js";
 import { ConfigManager } from "./config/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -9,7 +8,7 @@ import { Module } from "@core/types";
 /**
  * 代码生成器主类
  */
-export class Generate {
+class Generate {
   private configManager: ConfigManager;
   private generator: Generator;
   private path: string;
@@ -21,7 +20,6 @@ export class Generate {
 
   /**
    * 获取所有可用的模块
-   * @returns {Promise<Array>} 模块列表
    */
   async getAvailableModules() {
     const config = await this.configManager.loadConfig();
@@ -31,8 +29,7 @@ export class Generate {
 
   /**
    * 生成代码
-   * @param {Array} selectedModuleNames - 选择的模块名称列表，如果为空则生成所有模块
-   * @returns {Promise<void>}
+   * @param selectedModuleNames - 选择的模块名称列表，如果为空则生成所有模块
    */
   async generate(selectedModuleNames: string[] = []) {
     const config = await this.configManager.loadConfig();
@@ -73,9 +70,6 @@ export class Generate {
     }
   }
 }
-
-// 导出工具类
-export { ConfigManager, TemplateEngine };
 
 // 默认导出
 export default Generate;
