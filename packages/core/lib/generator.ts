@@ -1,25 +1,25 @@
-import Logger from "./logging";
+import Logger from "./logging/index.js";
 import { ConfigManager } from "./config/index.js";
 import { TemplateEngine } from "./template/engine.js";
 import { OUTPUT_DIR } from "./constants/index.js";
 import { writeFile } from "./common/index.js";
 import { replaceVariables } from "./utils/index.js";
+import { Module, Template } from "@core/types";
 /**
  * 主要的代码生成器类
  */
 export class Generator {
+  private configManager: ConfigManager;
+  private templateEngine: TemplateEngine;
   constructor() {
-    this.configManager = new ConfigManager(process.cwd());
-    this.templateEngine = new TemplateEngine(process.cwd());
+    this.configManager = new ConfigManager();
+    this.templateEngine = new TemplateEngine();
   }
   /**
    * 生成代码
-   * @param {Object} options - 生成选项
-   * @param {Array} options.modules - 要生成的模块列表
-   * @param {Object} options.config - 额外的配置
-   * @returns {Promise<void>}
+   * @param modules - 要生成的模块列表
    */
-  async generate(modules) {
+  async generate(modules: Module[]) {
     try {
       for (const module of modules) {
         await this.generateModule(module);
@@ -33,11 +33,9 @@ export class Generator {
 
   /**
    * 生成单个模块
-   * @param {Object} module - 模块配置
-   * @param {Object} config - 全局配置
-   * @returns {Promise<void>}
+   * @param module - 模块配置
    */
-  async generateModule(module) {
+  async generateModule(module: Module) {
     const moduleConfig = await this.configManager.loadModuleConfig(
       module.configList
     );
@@ -49,11 +47,10 @@ export class Generator {
 
   /**
    * 生成单个模版
-   * @param {Object} template - 模版配置
-   * @param {Object} config - 配置数据
-   * @returns {Promise<void>}
+   * @param template - 模版配置
+   * @param config - 配置数据的整合
    */
-  async generateTemplate(template, config) {
+  async generateTemplate(template: Template, config: Record<string, unknown>) {
     // 替换模版配置中的变量
     const processedTemplate = replaceVariables(template, config);
     // 渲染模版

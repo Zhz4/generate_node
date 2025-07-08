@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { Generate } from "./index.js";
+import { Generate } from "@core/index";
 import { program } from "commander";
 import inquirer from "inquirer";
 
@@ -42,7 +42,10 @@ program
       console.log(`✅ 已选择模块: ${selectedModules.join(", ")}`);
       await generator.generate(selectedModules);
     } catch (error) {
-      console.error("❌ 生成失败:", error.message);
+      console.error(
+        "❌ 生成失败:",
+        error instanceof Error ? error.message : error
+      );
       process.exit(1);
     }
   });
@@ -56,7 +59,10 @@ program
       const generator = new Generate();
       await generator.init();
     } catch (error) {
-      console.error("❌ 初始化失败:", error.message);
+      console.error(
+        "❌ 初始化失败:",
+        error instanceof Error ? error.message : error
+      );
       process.exit(1);
     }
   });

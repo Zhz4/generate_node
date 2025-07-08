@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    // 使用esnext模块
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    // 严格模式
+    "strict": true,
+    // 允许导入es模块
+    "esModuleInterop": true,
+    // 强制一致的文件名大小写
+    "forceConsistentCasingInFileNames": true,
+    // 跳过库检查
+    "skipLibCheck": true,
+    // 允许导入json文件
+    "resolveJsonModule": true,
+    // 不输出文件
+    "noEmit": true,
+    "paths": {
+      "@core/*": ["./packages/core/lib/*"]
+    }
+  }
+}
