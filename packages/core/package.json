@@ -5,6 +5,11 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhz4/generate_node.git",
+    "directory": "packages/core"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",

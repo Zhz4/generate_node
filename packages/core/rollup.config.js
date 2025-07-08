@@ -36,7 +36,6 @@ export default [
     output: {
       file: "dist/index.js",
       format: "es",
-      sourcemap: true,
     },
     plugins: [...basePlugins, copyPlugin],
   },
@@ -46,7 +45,6 @@ export default [
     output: {
       file: "dist/index.cjs",
       format: "cjs",
-      sourcemap: true,
     },
     plugins: [...basePlugins, copyPlugin],
   },
@@ -56,7 +54,6 @@ export default [
     output: {
       file: "dist/cli.js",
       format: "es",
-      sourcemap: true,
     },
     plugins: basePlugins,
   },
@@ -66,7 +63,6 @@ export default [
     output: {
       file: "dist/cli.cjs",
       format: "cjs",
-      sourcemap: true,
     },
     plugins: basePlugins,
   },
