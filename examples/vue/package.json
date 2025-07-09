@@ -1,0 +1,24 @@
+{
+  "name": "@smooth_zhz/generate_node-examples-vue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "generate:init": "npx @smooth_zhz/generate_node-core init",
+    "generate:dev": "npx @smooth_zhz/generate_node-core dev",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.17",
+    "@smooth_zhz/generate_node-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.3",
+    "vue-tsc": "^2.2.12"
+  }
+}

@@ -1,5 +1,5 @@
 <div align="center">
-  <h3>🚀 简易的代码生成工具</h3>
+  <h3>代码生成框架</h3>
   <p>一个基于 Monorepo 架构的灵活代码生成工具，专为后台管理系统设计</p>
   
   [![NPM Version](https://img.shields.io/npm/v/@smooth_zhz/generate_node-core)](https://www.npmjs.com/package/@smooth_zhz/generate_node-core)
@@ -9,7 +9,7 @@
 
 ## 📖 项目简介
 
-Generate Node 是一个高度可自定义的代码生成工具。它能够根据配置文件自动生成重复性的代码。例如：例如前端页面，对接的API文件，以及表格等。设置好模版后，只需修改配置文件，便可以一键生成对应的模块的代码
+Generate Node 是一个高度可自定义的代码生成工具。它能够根据配置文件自动生成重复性的代码。例如：例如前端页面，对接的 API 文件，以及表格等。设置好模版后，只需修改配置文件，便可以一键生成对应的模块的代码
 
 ### 💡 为什么选择 Generate Node？
 
@@ -27,6 +27,7 @@ Generate Node 通过模版化的方式，让您只需要修改配置文件，其
 - 📦 **NPM 包支持**: 可全局安装使用，也可作为项目依赖
 - 🎨 **EJS 模版引擎**: 强大的模版语法，支持条件渲染和循环
 - 💻 **CLI 工具**: 提供便捷的命令行工具
+- 📊 **开发模版监控**: 实时编译成代码效果，配合vue/react等可实时查看模版效果
 
 ## 🚀 快速开始
 
@@ -37,12 +38,32 @@ Generate Node 通过模版化的方式，让您只需要修改配置文件，其
 npm install -g @smooth_zhz/generate_node-core
 ```
 
-```bash
-# 初始化项目-生成示例配置
-generate init
+#### 1. 初始化项目
 
-# 生成代码
+创建基础配置文件和示例模版：
+
+```bash
+generate init
+```
+
+#### 2. 生成代码
+
+根据配置文件和模版生成目标代码：
+
+```bash
 generate code
+```
+
+#### 3. 开发模式（写模版时使用）
+
+启动实时监听和自动生成
+
+- 自动监听配置文件变化
+- 保存后实时生成代码
+- 配合 Vue/React 项目的热更新，即时预览生成效果
+
+```bash
+generate dev
 ```
 
 ### 项目中使用

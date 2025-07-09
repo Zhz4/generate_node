@@ -8,4 +8,5 @@ export interface Module {
   name: string;
   configList: string[];
   templates: Template[];
+  outputDir: string;
 }

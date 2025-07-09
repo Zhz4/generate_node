@@ -1,0 +1,24 @@
+[{
+        "name": "vue",
+        "configList": ["config/app.json", "config/helloWord.json"],
+        "outputDir": "src",
+        "templates": [{
+                "name": "template/app",
+                "outputName": "App.vue"
+            },
+            {
+                "name": "template/helloWord",
+                "outputName": "HelloWorld.vue"
+            }
+        ]
+    },
+    {
+        "name": "vue2",
+        "configList": ["config/app2.json"],
+        "outputDir": "src",
+        "templates": [{
+            "name": "template/app2",
+            "outputName": "App2.vue"
+        }]
+    }
+]

@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
-import { CONFIG_FILE } from "../constants/index.js";
-import { fileExists } from "../utils/index.js";
+import { CONFIG_DIR, CONFIG_FILE } from "../constants";
+import { fileExists } from "../utils";
 /**
  * 配置管理器类
  */
@@ -10,7 +10,7 @@ export class ConfigManager {
   // 配置文件路径
   private configPath: string;
   constructor() {
-    this.configPath = process.cwd();
+    this.configPath = path.join(process.cwd(), CONFIG_DIR);
   }
   /**
    * 加载配置

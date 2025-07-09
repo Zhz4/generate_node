@@ -51,6 +51,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.4.1",
+    "chokidar": "^4.0.3",
     "commander": "^11.1.0",
     "dayjs": "^1.11.13",
     "ejs": "^3.1.10",
