@@ -1,0 +1,260 @@
+<%_ let iconList = []; _%>
+<%_ tool_button_list.forEach(function(item) { _%>
+  <%_ if(item.type === 'import') { _%>
+    <%_ iconList.push('ArrowDownCircleOutline'); _%>
+    <%_ return } _%>
+  <%_ iconList.push(item.icon_component); _%>
+<%_ }); _%>
+<%_ iconList = [...new Set(iconList)]; _%>
+<template>
+  <div class="page_container">
+    <div class="filter_wrap">
+      <n-form ref="formRef" inline :label-width="100" :model="searchParams" label-placement="left">
+      <%_ main_form_item_list.forEach(function(item){ _%>
+        <n-form-item label="<%= item.label %>">
+          <%_ if (item.type === 'select') { _%>
+          <n-select 
+            v-model:value="searchParams.<%= item.key %>" 
+            :options="<%- jsonToJsFormat(item.options) %>"
+            clearable
+          />
+          <%_ } else if (item.type === 'daterange') { _%>
+          <n-date-picker v-model:formatted-value="<%= item.key %>" value-format="<%= item.timeformat %>" type="daterange" clearable />
+          <%_ } else { _%>
+          <n-input v-model:value="searchParams.<%= item.key %>" type="text" clearable/>
+          <%_ } _%>
+        </n-form-item>
+      <%_ }) _%>
+        <n-form-item>
+          <n-button type="primary" :loading="loading" @click="handleSearch">
+            <template #icon>
+              <n-icon :component="Search" />
+            </template>
+            搜索
+          </n-button>
+          <n-button style="margin-left: 10px" @click="resetForm">重置</n-button>
+        </n-form-item>
+      </n-form>
+      <div class="tool_wrap">
+        <div class="btn_wrap">
+        <%_ tool_button_list.forEach(function(item){ _%>
+          <%_ if(item.type === 'import'){ // 导入 _%>
+          <upload-file :auto-upload="false" :limit="1" :file-type-arr="['xlsx', 'xls']" @success="<%= item.handler %>">
+            <n-button type="warning">
+              <template #icon>
+                <n-icon :component="ArrowDownCircleOutline" />
+              </template>
+              <%= item.button_name %>
+            </n-button>
+          </upload-file>
+          <%_ return } _%>
+          <n-button type="primary" @click="<%= item.handler %>">
+            <template #icon>
+              <n-icon :component="<%= item.icon_component %>" />
+            </template>
+            <%= item.button_name %>
+          </n-button>
+          <%_ }) _%>
+        </div>
+      </div>
+    </div>
+    <div class="table_wrap">
+      <n-data-table
+        v-model:checked-row-keys="selectIds"
+        class="page_table"
+        :columns="columns"
+        :single-line="false"
+        :data="tableData"
+        :row-key="(row) => row.id"
+        :scroll-x="minXScroll"
+        flex-height
+      ></n-data-table>
+    </div>
+    <div class="page_wrap">
+      <n-pagination
+        v-model:page="searchParams.page"
+        v-model:page-size="searchParams.size"
+        :item-count="total"
+        show-size-picker
+        :page-sizes="[20, 50, 100]"
+        @update:page="queryData()"
+        @update:page-size="queryData()"
+      >
+        <template #prefix="{ itemCount }">共 {{ itemCount }} 条</template>
+      </n-pagination>
+    </div>
+
+    <!-- 编辑 -->
+    <EditModal ref="editRef" @success="queryData"></EditModal>
+  </div>
+</template>
+<script setup>
+<%_ let inputApiList = []; _%>
+<%_ let searchApi = ""; _%>
+<%_ let deleteApi = ""; _%>
+<%_ apiList.forEach(v => { _%>
+  <%_ if (v.command === 'select') { _%>
+    <%_ searchApi = v.handlerName; _%>
+  <%_ } else if (v.command === 'delete') { _%>
+    <%_ deleteApi = v.handlerName; _%>
+  <%_ } _%>
+  <%_ inputApiList.push(v.handlerName); _%>
+<%_ }) _%>
+import { Search,<%- iconList.join(', ') %> } from "@vicons/ionicons5";
+import { createColumns } from "./tableConfig.jsx";
+import { usePageSearch } from "@/hooks/pageSearch";
+import EditModal from "./components/EditModal.vue";
+import { useMessage } from "naive-ui"
+<%_ if(tool_button_list && tool_button_list.find(v=>v.type === 'export')){_%>
+import { findNodeByValid } from '@/utils/util-function/tree'
+import { exportExcel } from '@/utils/excel/index.js'
+<%_}_%>
+<%_ if(apiFileName && apiFileName !== ''){_%>
+import { <%= inputApiList.join(", ") %> } from "@/api/<%= apiFileName %>.js";
+<%_}_%>
+
+const message = useMessage()
+
+const columns = ref(createColumns({ handleDelete, handleEdit }));
+const minXScroll = computed(() => {
+  const cols = columns.value || [];
+  const colsWidth = cols.reduce(
+    (pre, cur) => pre + (cur.width || cur.minWidth || 100),
+    0
+  );
+  return colsWidth;
+});
+
+/**
+  * 选中行
+  */
+const selectIds = ref([]);
+
+/**
+  * 删除
+  */
+async function handleDelete(row) {
+<%_ if(deleteApi !== ''){ _%>
+  await <%= deleteApi %>({ id:row.id })
+  message.success("删除成功")
+  queryData()
+<%_ } _%>
+  console.log("删除");
+  console.log(row);
+}
+
+/**
+  * 编辑
+  */
+const editRef = ref()
+function handleEdit(row) {
+  console.log("编辑");
+  console.log(row);
+  editRef.value.open(row)
+}
+
+/**
+  * 搜索相关
+  */
+<%_ if(searchApi !== ""){ _%>
+const {loading,tableData,total,searchParams,handleSearch,queryData,resetForm} = usePageSearch(<%= searchApi %>, {
+  page: 1,
+  size: 20,
+});
+handleSearch()
+<%_ } _%>
+
+
+<%_ main_form_item_list.forEach(function(item){ _%>
+<%_ if(item.type === 'daterange'){ _%>
+/**
+  * <%= item.label %>
+  */
+const <%= item.key %> = computed({
+  get() {
+    if (!searchParams.<%= item.startField %> || !searchParams.<%= item.endField %>) {
+      return null
+    }
+    return [searchParams.<%= item.startField %>, searchParams.<%= item.endField %>]
+  },
+  set(val) {
+    if (!val) {
+      val = []
+      searchParams.<%= item.startField %> = ''
+      searchParams.<%= item.endField %> = ''
+      return
+    }
+    searchParams.<%= item.startField %> = val[0]
+    searchParams.<%= item.endField %> = val[1]
+  }
+})
+<%_ } _%>
+<%_ }) _%>
+
+<%_ tool_button_list.forEach(function(item){ _%>
+<%_ if(item.type === 'import') {// 导入 _%>
+/**
+ * <%= item.button_name %>
+ */
+async function <%= item.handler %>(file) {
+  await <%= apiList.find(v=>v.command === 'import').handlerName %>(file)
+  message.success('导入成功')
+  queryData()
+}
+<%_ return } _%>
+
+<%_ if(item.type === 'importTemplate') {// 导入模板 _%>
+/**
+ * <%= item.button_name %>
+ */
+async function <%= item.handler %>() {
+  const link = document.createElement('a')
+  link.href = '<%= item.link %>'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+<%_ return } _%>
+
+<%_ if(item.type === 'export') {// 导出模板 _%>
+/**
+ * <%= item.button_name %>
+ */
+async function <%= item.handler %>() {
+  const colums = Array.from(columns.value)
+  const fields = findNodeByValid(colums, 'children', item => {
+    if (item.key && !['num', 'actions'].includes(item.key)) return true
+    return false
+  })
+  const header = fields.map(v => v.title)
+  const keys = fields.map(v => v.key)
+  const exportsearchParams = searchParams
+  let data = (await <%= apiList.find(v=>v.command === 'export').handlerName %>(exportsearchParams)).data
+  if (data.length === 0) {
+    message.warning('没有数据导出')
+    return
+  }
+  data = data.map(v => {
+    return keys.map(key => v[key])
+  })
+  exportExcel({
+    filename: '<%= item.exportFileName %>',
+    header,
+    data,
+    autoWidth: true,
+    bookType: 'xlsx'
+  })
+}
+<%_ return } _%>
+/**
+  * <%=item.button_name %>
+  */
+function <%= item.handler%>(){
+  console.log("<%=item.button_name %>")
+  console.log(row)
+}
+<%_ }) _%>
+</script>
+<style lang="scss" scoped>
+@import '@/style/tablePage.scss';
+</style>

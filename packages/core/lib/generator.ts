@@ -1,12 +1,13 @@
-import Logger from "./logging/index.js";
-import { ConfigManager } from "./config/index.js";
-import { TemplateEngine } from "./template/engine.js";
-import { writeFile } from "./common/index.js";
-import { replaceVariables } from "./utils/index.js";
+import Logger from "./logging";
+import { ConfigManager } from "./config";
+import { TemplateEngine } from "./template/engine";
+import { writeFile } from "./common";
+import { replaceVariables } from "./utils";
 import { Module, Template } from "./types";
 import { fileURLToPath } from "url";
-import { copyDirectory } from "./utils/index.js";
+import { copyDirectory } from "./utils";
 import path from "path";
+import { CONFIG_DIR } from "./constants";
 
 /**
  * 主要的代码生成器类
@@ -69,7 +70,7 @@ class Generator {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = path.dirname(__filename);
       const initTemplatePath = path.join(__dirname, "initTemplate");
-      const targetPath = this.path;
+      const targetPath = path.join(this.path, CONFIG_DIR);
       Logger.info("开始初始化项目...");
       await copyDirectory(initTemplatePath, targetPath);
       Logger.info("项目初始化完成！");

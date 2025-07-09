@@ -1,0 +1,62 @@
+<template>
+  <n-modal v-model:show="show" class="edit_model" preset="dialog" title="编辑" :show-icon="false" @after-leave="close">
+    <n-form ref="formRef" class="dialog_form" :label-width="110" :model="form" :rules="rules" label-placement="left" label-align="left">
+    <%_ edit_form_item_list.forEach(function(item){ _%>
+      <n-form-item label="<%= item.label %>">
+        <%_ if (item.type === 'select') { _%>
+        <n-select 
+          v-model:value="form.<%= item.key %>" 
+          :options="<%- jsonToJsFormat(item.options) %>"
+          clearable
+        />
+        <%_ } else if (item.type === 'date') { _%>
+        <n-date-picker v-model:formatted-value="form.<%= item.key %>" value-format="<%= item.timeformat %>" type="date" clearable/>
+        <%_ } else { _%>
+        <n-input v-model:value="form.<%= item.key %>" type="text" clearable/>
+        <%_ } _%>
+      </n-form-item>
+    <%_ }) _%>
+    </n-form>
+    <template #action>
+      <n-button :loading="loading" @click="close">取消</n-button>
+      <n-button type="primary" :loading="loading" @click="handleSubmit">
+        <template #icon>
+          <n-icon :component="ArrowUpOutline" />
+        </template>
+        保存
+      </n-button>
+    </template>
+  </n-modal>
+</template>
+
+<script setup>
+import { ArrowUpOutline } from "@vicons/ionicons5";
+import { useMessage } from 'naive-ui'
+
+const message = useMessage()
+const show = ref(false);
+const form = ref({});
+
+const emit = defineEmits(["success"]);
+
+/**
+ * 提交
+ */
+async function handleSubmit() {
+  console.log("提交");
+  emit("success");
+  close()
+}
+
+defineExpose({
+  open,
+});
+function open(row = {}) {
+  show.value = true;
+  form.value = { ...row };
+}
+function close() {
+  show.value = false;
+  form.value = {}
+}
+</script>
