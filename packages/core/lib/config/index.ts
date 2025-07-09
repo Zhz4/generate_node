@@ -4,6 +4,7 @@ import { pathToFileURL } from "url";
 import { CONFIG_DIR, CONFIG_FILE } from "../constants";
 import { fileExists } from "../utils";
 import { ConfigSchema } from "./schemas";
+import { Module } from "@core/types";
 /**
  * 配置管理器类
  */
@@ -15,9 +16,9 @@ export class ConfigManager {
   }
   /**
    * 加载配置
-   * @returns Promise<Record<string, unknown>> 配置对象
+   * @returns Promise<Array<unknown>> 配置对象
    */
-  async loadConfig(): Promise<Record<string, unknown> | Error> {
+  async loadConfig(): Promise<Array<Module> | Error> {
     try {
       const configFile = path.join(this.configPath, CONFIG_FILE);
       if (await fileExists(configFile)) {

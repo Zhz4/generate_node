@@ -3,8 +3,9 @@ import { generator } from "@core/index";
 import { dev } from "@core/devServe";
 import { program } from "commander";
 import inquirer from "inquirer";
+import { version } from "../package.json";
 
-program.name("generate").description("代码生成工具").version("1.0.0");
+program.name("generate").description("代码生成工具").version(version);
 
 const selectModules = async (): Promise<string[]> => {
   const allModules = await generator.getAvailableModules();
