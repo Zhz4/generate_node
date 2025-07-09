@@ -1,6 +1,6 @@
 {
   "name": "@smooth_zhz/generate_node-core",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A flexible code generation tool with configurable templates and settings",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
