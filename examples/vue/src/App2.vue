@@ -3,8 +3,9 @@
 
 <template>
   <div>
-    <div>我是一个helloWord组件</div>
-    <div>爱好7：<%- hobby %></div>
+    <div>姓名：张三</div>
+    <div>年龄：20</div>
+    <div>性别：女</div>
   </div>
 </template>
 
