@@ -1,5 +1,5 @@
 <div align="center">
-  <h3>🚀 简易的代码生成工具</h3>
+  <h3>代码生成框架</h3>
   <p>一个基于 Monorepo 架构的灵活代码生成工具，专为后台管理系统设计</p>
   
   [![NPM Version](https://img.shields.io/npm/v/@smooth_zhz/generate_node-core)](https://www.npmjs.com/package/@smooth_zhz/generate_node-core)
@@ -27,6 +27,7 @@ Generate Node 通过模版化的方式，让您只需要修改配置文件，其
 - 📦 **NPM 包支持**: 可全局安装使用，也可作为项目依赖
 - 🎨 **EJS 模版引擎**: 强大的模版语法，支持条件渲染和循环
 - 💻 **CLI 工具**: 提供便捷的命令行工具
+- 📊 **开发模版监控**: 实时编译成代码效果，配合vue/react等可实时查看模版效果
 
 ## 🚀 快速开始
 
