@@ -9,10 +9,8 @@ import path from "path";
  */
 export class TemplateEngine {
   private templatePath: string;
-  private templateCache: Map<string, string>;
   constructor() {
     this.templatePath = path.join(process.cwd(), CONFIG_DIR);
-    this.templateCache = new Map();
   }
 
   /**
@@ -53,15 +51,9 @@ export class TemplateEngine {
    * @returns {Promise<string>} - 模版内容
    */
   async loadTemplate(templateName: string): Promise<string> {
-    // 检查缓存
-    if (this.templateCache.has(templateName)) {
-      return this.templateCache.get(templateName)!;
-    }
     const templatePath = this.getTemplatePath(templateName);
     try {
       const content = await fs.promises.readFile(templatePath, "utf8");
-      // 缓存模版内容
-      this.templateCache.set(templateName, content);
       return content;
     } catch (error) {
       throw new Error(`无法加载模版文件: ${templatePath}`);
