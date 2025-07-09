@@ -13,6 +13,9 @@
     "test:code": "pnpm --filter @smooth_zhz/generate_node-examples run code",
     "test:init": "pnpm --filter @smooth_zhz/generate_node-examples run init",
     "test:dev": "pnpm --filter @smooth_zhz/generate_node-examples run dev",
+    "test:vue": "pnpm --filter @smooth_zhz/generate_node-examples-vue run dev",
+    "test:vue:init": "pnpm --filter @smooth_zhz/generate_node-examples-vue run generate:init",
+    "test:vue:dev": "pnpm --filter @smooth_zhz/generate_node-examples-vue run generate:dev",
     "release:patch": "pnpm --filter @smooth_zhz/generate_node-core run release:patch",
     "release:minor": "pnpm --filter @smooth_zhz/generate_node-core run release:minor",
     "release:major": "pnpm --filter @smooth_zhz/generate_node-core run release:major"
@@ -22,7 +25,7 @@
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.12",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },

@@ -1,6 +1,7 @@
 [{
     "name": "backend",
     "configList": ["config/main_config.json", "config/edit_config.json"],
+    "outputDir": "output",
     "templates": [{
             "name": "template/template_api",
             "outputName": "api/${apiFileName}.js"

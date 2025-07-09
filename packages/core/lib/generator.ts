@@ -1,7 +1,6 @@
 import Logger from "./logging/index.js";
 import { ConfigManager } from "./config/index.js";
 import { TemplateEngine } from "./template/engine.js";
-import { OUTPUT_DIR } from "./constants/index.js";
 import { writeFile } from "./common/index.js";
 import { replaceVariables } from "./utils/index.js";
 import { Module, Template } from "./types";
@@ -54,8 +53,8 @@ class Generator {
 
       for (const module of modulesToGenerate) {
         await this.generateModule(module);
+        Logger.info(`📁 生成的文件位于: ${process.cwd()}/${module.outputDir}`);
       }
-      Logger.info(`📁 生成的文件位于: ${process.cwd()}/${OUTPUT_DIR}`);
     } catch (error) {
       Logger.error(`生成代码时出错: ${error}`);
       throw error;
@@ -93,7 +92,7 @@ class Generator {
     );
     // 生成模块的每个模版
     for (const template of module.templates) {
-      await this.generateTemplate(template, moduleConfig);
+      await this.generateTemplate(template, moduleConfig, module.outputDir);
     }
   }
 
@@ -101,10 +100,12 @@ class Generator {
    * 生成单个模版
    * @param template - 模版配置
    * @param config - 配置数据的整合
+   * @param outputDir - 输出目录
    */
   private async generateTemplate(
     template: Template,
-    config: Record<string, unknown>
+    config: Record<string, unknown>,
+    outputDir: string
   ) {
     // 替换模版配置中的变量
     const processedTemplate = replaceVariables(template, config);
@@ -114,7 +115,7 @@ class Generator {
       config
     );
     // 写入文件
-    await writeFile(processedTemplate.outputName, content);
+    await writeFile(processedTemplate.outputName, outputDir, content);
   }
 }
 
