@@ -6,6 +6,32 @@ import inquirer from "inquirer";
 
 program.name("generate").description("代码生成工具").version("1.0.0");
 
+const selectModules = async (): Promise<string[]> => {
+  const allModules = await generator.getAvailableModules();
+  if (allModules.length === 0) {
+    console.log("❌ 没有找到可用的模块配置");
+    process.exit(1);
+  }
+  const { selectedModules } = await inquirer.prompt([
+    {
+      type: "checkbox",
+      name: "selectedModules",
+      message: "请选择需要生成的模块:",
+      choices: allModules.map((module) => ({
+        name: module.name,
+        value: module.name,
+      })),
+      validate: (input) => {
+        if (input.length === 0) {
+          return "请至少选择一个模块";
+        }
+        return true;
+      },
+    },
+  ]);
+  return selectedModules;
+};
+
 program
   .command("code")
   .description("生成代码")
@@ -17,29 +43,7 @@ program
         await generator.generate();
         return;
       }
-      const allModules = await generator.getAvailableModules();
-      if (allModules.length === 0) {
-        console.log("❌ 没有找到可用的模块配置");
-        process.exit(1);
-      }
-      const { selectedModules } = await inquirer.prompt([
-        {
-          type: "checkbox",
-          name: "selectedModules",
-          message: "请选择需要生成的模块:",
-          choices: allModules.map((module) => ({
-            name: module.name,
-            value: module.name,
-          })),
-          validate: (input) => {
-            if (input.length === 0) {
-              return "请至少选择一个模块";
-            }
-            return true;
-          },
-        },
-      ]);
-      console.log(`✅ 已选择模块: ${selectedModules.join(", ")}`);
+      const selectedModules = await selectModules();
       await generator.generate(selectedModules);
     } catch (error) {
       console.error(
@@ -69,9 +73,15 @@ program
 program
   .command("dev")
   .description("开发模式")
+  .option("-a, --all", "开发所有模块")
   .action(async (options) => {
     try {
-      dev();
+      if (options.all) {
+        dev();
+        return;
+      }
+      const selectedModules = await selectModules();
+      dev(selectedModules);
     } catch (error) {
       console.error("❌ 开发模式失败:", error);
       process.exit(1);

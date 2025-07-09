@@ -18,5 +18,5 @@ export async function writeFile(
   await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
   // 写入文件
   await fs.promises.writeFile(filePath, content, "utf8");
-  Logger.info(`生成文件: ${filePath}`);
+  Logger.info(`代码写入成功: ${filePath}`);
 }

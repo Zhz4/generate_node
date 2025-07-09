@@ -35,7 +35,7 @@ class Generator {
    * 生成代码
    * @param selectedModuleNames - 要生成的模块列表
    */
-  async generate(selectedModuleNames: string[] = []) {
+  async generate(selectedModuleNames?: string[]) {
     try {
       const config = await this.configManager.loadConfig();
       const allModules = Array.isArray(config) ? config : [];
@@ -48,13 +48,11 @@ class Generator {
         );
       }
       if (modulesToGenerate.length === 0) {
-        Logger.error("没有找到可用的模块");
+        Logger.warn("没有找到可用的模块");
         return;
       }
-
       for (const module of modulesToGenerate) {
         await this.generateModule(module);
-        Logger.info(`📁 生成的文件位于: ${process.cwd()}/${module.outputDir}`);
       }
     } catch (error) {
       Logger.error(`生成代码时出错: ${error}`);
@@ -91,6 +89,10 @@ class Generator {
     const moduleConfig = await this.configManager.loadModuleConfig(
       module.configList
     );
+    if (module.templates.length === 0) {
+      Logger.warn(`模块 ${module.name} 没有找到可用的模版`);
+      return;
+    }
     // 生成模块的每个模版
     for (const template of module.templates) {
       await this.generateTemplate(template, moduleConfig, module.outputDir);
@@ -111,12 +113,16 @@ class Generator {
     // 替换模版配置中的变量
     const processedTemplate = replaceVariables(template, config);
     // 渲染模版
-    const content = await this.templateEngine.render(
-      processedTemplate.name,
-      config
-    );
-    // 写入文件
-    await writeFile(processedTemplate.outputName, outputDir, content);
+    try {
+      const content = await this.templateEngine.render(
+        processedTemplate.name,
+        config
+      );
+      await writeFile(processedTemplate.outputName, outputDir, content);
+    } catch (error) {
+      Logger.error(`渲染模版 ${processedTemplate.name} 时出错: ${error}`);
+      return;
+    }
   }
 }
 

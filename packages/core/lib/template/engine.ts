@@ -40,8 +40,7 @@ export class TemplateEngine {
       });
       return renderedContent;
     } catch (error) {
-      console.error(`渲染模版 ${templateName} 时出错:`, error);
-      throw error;
+      throw new Error(`渲染模版 ${templateName} 时出错: ${error}`);
     }
   }
 

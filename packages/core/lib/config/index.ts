@@ -3,6 +3,7 @@ import path from "path";
 import { pathToFileURL } from "url";
 import { CONFIG_DIR, CONFIG_FILE } from "../constants";
 import { fileExists } from "../utils";
+import { ConfigSchema } from "./schemas";
 /**
  * 配置管理器类
  */
@@ -14,22 +15,29 @@ export class ConfigManager {
   }
   /**
    * 加载配置
-   * @returns {Promise<Object>} - 配置对象
+   * @returns Promise<Record<string, unknown>> 配置对象
    */
-  async loadConfig(): Promise<Record<string, unknown>> {
+  async loadConfig(): Promise<Record<string, unknown> | Error> {
     try {
       const configFile = path.join(this.configPath, CONFIG_FILE);
       if (await fileExists(configFile)) {
         const content = await fs.promises.readFile(configFile, "utf8");
-        return JSON.parse(content);
+        const parsed = JSON.parse(content);
+        const validated = ConfigSchema.safeParse(parsed);
+        if (!validated.success) {
+          const issues = validated.error.issues
+            .map((issue) => {
+              return `字段 "${issue.path.join(".")}" 错误: ${issue.message}`;
+            })
+            .join("; ");
+          return new Error(`配置文件格式错误: ${issues}，请检查配置文件`);
+        }
+
+        return validated.data;
       }
-      return {};
+      return new Error(`配置文件不存在`);
     } catch (error) {
-      console.warn(
-        "加载配置失败:",
-        error instanceof Error ? error.message : error
-      );
-      return {};
+      return new Error(`加载配置失败: ${error}`);
     }
   }
 
