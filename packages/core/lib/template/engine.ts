@@ -1,3 +1,4 @@
+import { CONFIG_DIR } from "@core/constants";
 import { fileExistsSync } from "@core/utils";
 import ejs from "ejs";
 import fs from "fs";
@@ -10,7 +11,7 @@ export class TemplateEngine {
   private templatePath: string;
   private templateCache: Map<string, string>;
   constructor() {
-    this.templatePath = process.cwd();
+    this.templatePath = path.join(process.cwd(), CONFIG_DIR);
     this.templateCache = new Map();
   }
 

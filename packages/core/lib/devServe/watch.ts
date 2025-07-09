@@ -1,12 +1,14 @@
 import chokidar from "chokidar";
 import { WATCH_FILE } from "@core/constants";
 import logger from "@core/logging";
+import path from "path";
+import { CONFIG_DIR } from "../constants";
 
 export const watch = (cb: (event: string, path: string) => void) => {
   const watcher = chokidar.watch(WATCH_FILE, {
     persistent: true,
     atomic: true,
-    cwd: process.cwd(),
+    cwd: path.join(process.cwd(), CONFIG_DIR),
     // 初始化时不触发事件
     ignoreInitial: true,
   });
